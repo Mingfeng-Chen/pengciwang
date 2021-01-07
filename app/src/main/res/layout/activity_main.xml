@@ -46,7 +46,7 @@
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="50dp"
                 android:background="@null"
-                android:hint="请输入手机号"
+                android:hint="请输入用户名"
                 android:textColor="#9F9FA0"
                 android:textColorHint="#9F9FA0" />
 
