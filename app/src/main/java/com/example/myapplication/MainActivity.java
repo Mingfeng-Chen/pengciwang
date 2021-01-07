@@ -11,8 +11,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
 
+public class MainActivity extends AppCompatActivity {
+    private DBOpenHelper mDBOpenHelper;
     private Button mBtnLogin;
     private Button mBtnRegister;
     private EditText mEtUserName;
@@ -32,15 +34,35 @@ public class MainActivity extends AppCompatActivity {
         mEtPassword = findViewById(R.id.et_2);
         mTvForget = findViewById(R.id.tv_1);
         mTvFace = findViewById(R.id.tv_2);
+        mDBOpenHelper=new DBOpenHelper(this);
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String username=mEtUserName.getText().toString();
                 String password=mEtPassword.getText().toString();
-                if(true){               //登录成功
-                    Toast.makeText(getApplicationContext(),"登录成功",Toast.LENGTH_SHORT).show();
+                if(username.isEmpty()){               //登录成功
+                    Toast.makeText(getApplicationContext(),"用户名不能为空",Toast.LENGTH_SHORT).show();
+                }else if(password.isEmpty()){
+                    Toast.makeText(getApplicationContext(),"密码不能为空",Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(getApplicationContext(),"登录失败",Toast.LENGTH_SHORT).show();
+                    ArrayList<User> data = mDBOpenHelper.getAllData();
+                    boolean match = false;
+                    for (int i = 0; i < data.size(); i++) {
+                        User user = data.get(i);
+                        if (username.equals(user.getName()) && password.equals(user.getPassword())) {
+                            match = true;
+                            break;
+                        } else {
+                            match = false;
+                        }
+                    }
+                    if (match) {
+                        Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
+                        Intent intent=new Intent(MainActivity.this,RetrieveActivity.class);//跳转到背单词界面
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "用户名或密码不正确，请重新输入", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -49,10 +71,30 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String username=mEtUserName.getText().toString();
                 String password=mEtPassword.getText().toString();
-                if(true){               //注册成功
-                    Toast.makeText(getApplicationContext(),"注册成功",Toast.LENGTH_SHORT).show();
+                if(username.isEmpty()){               //登录成功
+                    Toast.makeText(getApplicationContext(),"用户名不能为空",Toast.LENGTH_SHORT).show();
+                }else if(password.isEmpty()){
+                    Toast.makeText(getApplicationContext(),"密码不能为空",Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(getApplicationContext(),"注册失败",Toast.LENGTH_SHORT).show();
+                    ArrayList<User> data = mDBOpenHelper.getAllData();
+                    boolean match = false;
+                    for (int i = 0; i < data.size(); i++) {
+                        User user = data.get(i);
+                        if (username.equals(user.getName())) {
+                            match = true;
+                            break;
+                        } else {
+                            match = false;
+                        }
+                    }
+                    if (match) {
+                        Toast.makeText(getApplicationContext(), "用户名已存在", Toast.LENGTH_SHORT).show();
+                    } else {
+                        mDBOpenHelper.add(username, password);
+                        Toast.makeText(getApplicationContext(), "注册成功", Toast.LENGTH_SHORT).show();
+                        Intent intent=new Intent(MainActivity.this,BindActivity.class);
+                        startActivity(intent);
+                    }
                 }
             }
         });
