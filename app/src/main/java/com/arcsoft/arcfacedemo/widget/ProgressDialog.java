@@ -1,14 +1,14 @@
 package com.arcsoft.arcfacedemo.widget;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
+import androidx.annotation.NonNull;
+import android.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.arcsoft.arcfacedemo.R;
+import com.example.myapplication.R;
 
 public class ProgressDialog extends AlertDialog {
     private ProgressBar progressBar;

@@ -29,7 +29,6 @@ import io.reactivex.schedulers.Schedulers;
 
 
 public class BindActivity extends AppCompatActivity {
-
     private Toast toast = null;
     private static final int ACTION_REQUEST_PERMISSIONS = 0x001;
     private static final String[] NEEDED_PERMISSIONS = new String[]{
@@ -51,7 +50,7 @@ public class BindActivity extends AppCompatActivity {
      * @param view
      */
     public void jumpToFaceRecognizeActivity(View view) {
-        startActivity(new Intent(this, RegisterAndRecognizeActivity.class));
+        startActivity(new Intent(this, FaceActivity.class));
     }
 
 
@@ -72,7 +71,7 @@ public class BindActivity extends AppCompatActivity {
             @Override
             public void subscribe(ObservableEmitter<Integer> emitter) throws Exception {
                 FaceEngine faceEngine = new FaceEngine();
-                int activeCode = faceEngine.active(ChooseFunctionActivity.this, Constants.APP_ID, Constants.SDK_KEY);
+                int activeCode = faceEngine.active(BindActivity.this, Constants.APP_ID, Constants.SDK_KEY);
                 emitter.onNext(activeCode);
             }
         })

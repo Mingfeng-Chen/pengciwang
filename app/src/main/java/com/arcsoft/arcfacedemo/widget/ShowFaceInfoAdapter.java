@@ -1,18 +1,20 @@
 package com.arcsoft.arcfacedemo.widget;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.arcsoft.arcfacedemo.R;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.myapplication.R;
 import com.arcsoft.arcfacedemo.faceserver.CompareResult;
 import com.arcsoft.arcfacedemo.faceserver.FaceServer;
-import com.bumptech.glide.Glide;
+//import com.bumptech.glide.Glide;
 
 import java.io.File;
 import java.util.List;
@@ -42,9 +44,9 @@ public class ShowFaceInfoAdapter extends RecyclerView.Adapter<ShowFaceInfoAdapte
             return;
         }
         File imgFile = new File(FaceServer.ROOT_PATH + File.separator + FaceServer.SAVE_IMG_DIR + File.separator + compareResultList.get(position).getUserName() + FaceServer.IMG_SUFFIX);
-        Glide.with(holder.imageView)
+        /*Glide.with(holder.imageView)
                 .load(imgFile)
-                .into(holder.imageView);
+                .into(holder.imageView);*/
         holder.textView.setText(compareResultList.get(position).getUserName());
     }
 

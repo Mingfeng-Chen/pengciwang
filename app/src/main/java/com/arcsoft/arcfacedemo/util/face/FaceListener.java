@@ -1,6 +1,6 @@
 package com.arcsoft.arcfacedemo.util.face;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.arcsoft.face.FaceFeature;
 import com.arcsoft.face.FaceInfo;
