@@ -1,11 +1,17 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.mob.sdk'
 
+MobSDK {
+    appKey "3206d0c389f81"
+    appSecret "ebda6b1d00657ddc6a290f6fbcc4eebb"
+    SMSSDK {}
+}
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
     defaultConfig {
         applicationId "com.example.myapplication"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"

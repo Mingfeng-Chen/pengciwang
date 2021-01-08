@@ -66,7 +66,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class FaceActivity extends AppCompatActivity implements ViewTreeObserver.OnGlobalLayoutListener {
-    private static final String TAG = "RegisterAndRecognize";
+    private static final String TAG = "FaceActivity";
     private static final int MAX_DETECT_NUM = 10;
     /**
      * 当FR成功，活体未成功时，FR等待活体的时间
@@ -115,8 +115,6 @@ public class FaceActivity extends AppCompatActivity implements ViewTreeObserver.
      * 绘制人脸框的控件
      */
     private FaceRectView faceRectView;
-
-    private Switch switchLivenessDetect;
 
     private static final int ACTION_REQUEST_PERMISSIONS = 0x001;
     private static final float SIMILAR_THRESHOLD = 0.8F;
@@ -458,9 +456,9 @@ public class FaceActivity extends AppCompatActivity implements ViewTreeObserver.
                 .create(new ObservableOnSubscribe<CompareResult>() {
                     @Override
                     public void subscribe(ObservableEmitter<CompareResult> emitter) {
-//                        Log.i(TAG, "subscribe: fr search start = " + System.currentTimeMillis() + " trackId = " + requestId);
+                        Log.i(TAG, "subscribe: fr search start = " + System.currentTimeMillis() + " trackId = " + requestId);
                         CompareResult compareResult = FaceServer.getInstance().getTopOfFaceLib(frFace);
-//                        Log.i(TAG, "subscribe: fr search end = " + System.currentTimeMillis() + " trackId = " + requestId);
+                        Log.i(TAG, "subscribe: fr search end = " + System.currentTimeMillis() + " trackId = " + requestId);
                         if (compareResult == null) {
                             emitter.onError(null);
                         } else {

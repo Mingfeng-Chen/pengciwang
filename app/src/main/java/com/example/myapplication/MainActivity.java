@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     if (match) {
                         Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
-                        Intent intent=new Intent(MainActivity.this,RetrieveActivity.class);//跳转到背单词界面
+                        Intent intent=new Intent(MainActivity.this,WordActivity.class);//跳转到背单词界面
                         startActivity(intent);
                     } else {
                         Toast.makeText(getApplicationContext(), "用户名或密码不正确，请重新输入", Toast.LENGTH_SHORT).show();

@@ -47,6 +47,7 @@
                 android:layout_marginRight="50dp"
                 android:background="@null"
                 android:hint="请输入用户名"
+                android:lines="1"
                 android:textColor="#9F9FA0"
                 android:textColorHint="#9F9FA0" />
 
@@ -69,6 +70,7 @@
                 android:background="@null"
                 android:hint="请输入密码"
                 android:inputType="textPassword"
+                android:lines="1"
                 android:textColor="#9F9FA0"
                 android:textColorHint="#9F9FA0" />
         </LinearLayout>

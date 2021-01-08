@@ -39,7 +39,6 @@ public class BindActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bind);
-        ConfigUtil.setFtOrient(BindActivity.this, FaceEngine.ASF_OP_90_ONLY);
     }
 
 
