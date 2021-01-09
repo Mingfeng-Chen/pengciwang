@@ -27,8 +27,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-
-public class BindActivity extends AppCompatActivity {
+/**
+ * BindActivity
+ * 绑定人脸和手机号
+ */
+public class BindActivity extends BaseActivity {
     private Toast toast = null;
     private static final int ACTION_REQUEST_PERMISSIONS = 0x001;
     private static final String[] NEEDED_PERMISSIONS = new String[]{

@@ -64,7 +64,10 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-
+/**
+ * FaceActivity
+ * 注册人脸
+ */
 public class FaceActivity extends AppCompatActivity implements ViewTreeObserver.OnGlobalLayoutListener {
     private static final String TAG = "FaceActivity";
     private static final int MAX_DETECT_NUM = 10;

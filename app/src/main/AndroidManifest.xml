@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.myapplication">
+
+    <uses-sdk tools:overrideLibrary="com.hyphenate.easeui" />
     <!-- camera -->
     <uses-permission android:name="android.permission.CAMERA" /> <!-- sdcard -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- wifi internet -->
@@ -13,7 +15,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-sdk tools:overrideLibrary="com.hyphenate.easeui" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,7 +23,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".WordActivity"></activity>
+        <activity android:name=".NightActivity"></activity>
+        <activity android:name=".BaseActivity" />
+        <activity android:name=".WordActivity" />
         <activity android:name=".BindActivity" />
         <activity android:name=".FaceActivity" />
         <activity android:name=".RetrieveActivity" />

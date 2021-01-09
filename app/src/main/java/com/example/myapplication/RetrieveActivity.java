@@ -14,7 +14,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
-
+/**
+ * RetrieveActivity
+ * 找回密码
+ */
 public class RetrieveActivity extends AppCompatActivity {
     private Button buttonCode,buttonLogin;
     private EditText editTextPhoneNum,editTextCode;

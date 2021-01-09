@@ -24,7 +24,10 @@ import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-
+/**
+ * MainActivity
+ * 登录注册
+ */
 public class MainActivity extends AppCompatActivity {
     private DBOpenHelper mDBOpenHelper;
     private Button mBtnLogin;
