@@ -1,9 +1,10 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+import org.json.JSONArray;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -11,7 +12,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.dao.Constant;
+
+import org.json.JSONArray;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
     private DBOpenHelper mDBOpenHelper;
@@ -45,23 +57,25 @@ public class MainActivity extends AppCompatActivity {
                 }else if(password.isEmpty()){
                     Toast.makeText(getApplicationContext(),"密码不能为空",Toast.LENGTH_SHORT).show();
                 }else{
-                    ArrayList<User> data = mDBOpenHelper.getAllData();
-                    boolean match = false;
-                    for (int i = 0; i < data.size(); i++) {
-                        User user = data.get(i);
-                        if (username.equals(user.getName()) && password.equals(user.getPassword())) {
-                            match = true;
-                            break;
-                        } else {
-                            match = false;
+                    OkHttpClient okHttpClient = new OkHttpClient();
+                    FormBody formBody = new FormBody.Builder().add("name", username).add("password",password).build();
+                    Request request = new Request.Builder()
+                            .url(Constant.GET)
+                            .post(formBody)
+                            .build();
+                    try (Response response = okHttpClient.newCall(request).execute()) {
+                        Looper.prepare();
+                        if (Boolean.parseBoolean(response.body().string()))
+                        {
+                            Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
                         }
-                    }
-                    if (match) {
-                        Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
-                        Intent intent=new Intent(MainActivity.this,WordActivity.class);//跳转到背单词界面
-                        startActivity(intent);
-                    } else {
-                        Toast.makeText(getApplicationContext(), "用户名或密码不正确，请重新输入", Toast.LENGTH_SHORT).show();
+                        else
+                        {
+                            Toast.makeText(getApplicationContext(), "用户名或密码错误", Toast.LENGTH_SHORT).show();
+                        }
+                        Looper.loop();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
             }
@@ -76,24 +90,25 @@ public class MainActivity extends AppCompatActivity {
                 }else if(password.isEmpty()){
                     Toast.makeText(getApplicationContext(),"密码不能为空",Toast.LENGTH_SHORT).show();
                 }else{
-                    ArrayList<User> data = mDBOpenHelper.getAllData();
-                    boolean match = false;
-                    for (int i = 0; i < data.size(); i++) {
-                        User user = data.get(i);
-                        if (username.equals(user.getName())) {
-                            match = true;
-                            break;
-                        } else {
-                            match = false;
+                    OkHttpClient okHttpClient = new OkHttpClient();
+                    FormBody formBody = new FormBody.Builder().add("name", username).add("password",password).build();
+                    Request request = new Request.Builder()
+                            .url(Constant.ADD)
+                            .post(formBody)
+                            .build();
+                    try (Response response = okHttpClient.newCall(request).execute()) {
+                        Looper.prepare();
+                        if (Boolean.parseBoolean(response.body().string()))
+                        {
+                            Toast.makeText(getApplicationContext(), "注册成功", Toast.LENGTH_SHORT).show();
                         }
-                    }
-                    if (match) {
-                        Toast.makeText(getApplicationContext(), "用户名已存在", Toast.LENGTH_SHORT).show();
-                    } else {
-                        mDBOpenHelper.add(username, password);
-                        Toast.makeText(getApplicationContext(), "注册成功", Toast.LENGTH_SHORT).show();
-                        Intent intent=new Intent(MainActivity.this,BindActivity.class);
-                        startActivity(intent);
+                        else
+                        {
+                            Toast.makeText(getApplicationContext(), "注册失败", Toast.LENGTH_SHORT).show();
+                        }
+                        Looper.loop();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
             }

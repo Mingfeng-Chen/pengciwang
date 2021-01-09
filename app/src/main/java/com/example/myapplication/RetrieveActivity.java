@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
@@ -19,6 +20,7 @@ public class RetrieveActivity extends AppCompatActivity {
     private EditText editTextPhoneNum,editTextCode;
     private String phoneNum,code;
     private EventHandler eh;
+    private DBOpenHelper dbOpenHelper=new DBOpenHelper(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,6 +112,11 @@ public class RetrieveActivity extends AppCompatActivity {
                 if(!code.isEmpty()){
                     //提交验证码
                     SMSSDK.submitVerificationCode("86", phoneNum, code);
+                    String password=null;
+
+                    Toast.makeText(getApplicationContext(),password,Toast.LENGTH_LONG).show();
+                    Intent intent=new Intent(RetrieveActivity.this,MainActivity.class);//跳转到登录界面
+                    startActivity(intent);
                 }else{
                     Toast.makeText(getApplicationContext(),"请输入验证码",Toast.LENGTH_LONG).show();
                     return;

@@ -68,7 +68,9 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     public void update(String password){
         db.execSQL("UPDATE user SET password = ?",new Object[]{password});
     }
+    public void query(String telephone){
 
+    }
     /**
      * @return
      */
