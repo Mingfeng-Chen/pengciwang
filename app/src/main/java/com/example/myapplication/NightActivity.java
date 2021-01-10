@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +21,12 @@ public class NightActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_night);
     }
+
+    @Override
+    void afterRequestPermission(int requestCode, boolean isAllGranted) {
+
+    }
+
     public void modeDay(View v) {
         setEnableNightMode(false);
     }
