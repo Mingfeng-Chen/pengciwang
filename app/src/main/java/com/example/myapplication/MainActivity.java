@@ -3,6 +3,7 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 import org.json.JSONArray;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Looper;
 import android.view.View;
@@ -12,9 +13,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.Util.DBOpenHelper;
+import com.usts.englishlearning.activity.ListActivity;
+import com.usts.englishlearning.activity.PlanActivity;
 import com.example.myapplication.dao.Constant;
+import com.usts.englishlearning.config.ConfigData;
+import com.usts.englishlearning.database.User;
+import com.usts.englishlearning.database.UserConfig;
 
 import org.json.JSONArray;
+import org.litepal.LitePal;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -60,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 }else if(password.isEmpty()){
                     Toast.makeText(getApplicationContext(),"密码不能为空",Toast.LENGTH_SHORT).show();
                 }else{
-                    OkHttpClient okHttpClient = new OkHttpClient();
+                    /*OkHttpClient okHttpClient = new OkHttpClient();
                     FormBody formBody = new FormBody.Builder().add("name", username).add("password",password).build();
                     Request request = new Request.Builder()
                             .url(Constant.GET)
@@ -79,7 +87,25 @@ public class MainActivity extends AppCompatActivity {
                         Looper.loop();
                     } catch (IOException e) {
                         e.printStackTrace();
+                    }*/
+                    LitePal.initialize(getApplicationContext());
+                    List<User> users = LitePal.where("userName=?", username + "").find(User.class);
+                    if (users.isEmpty()) {
+                        User user = new User();
+                        user.setUserName(username);;
+                        // 测试
+                        user.setUserMoney(0);
+                        user.setUserWordNumber(0);
+                        user.save();
                     }
+                    List<UserConfig> userConfigs = LitePal.where("userId=?",1 + "").find(UserConfig.class);
+                    if (userConfigs.isEmpty()) {
+                        UserConfig userConfig = new UserConfig();
+                        userConfig.setCurrentBookId(-1);
+                        userConfig.save();
+                    }
+                    //ConfigData.setIsLogged(true);
+                    Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -93,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                 }else if(password.isEmpty()){
                     Toast.makeText(getApplicationContext(),"密码不能为空",Toast.LENGTH_SHORT).show();
                 }else{
-                    OkHttpClient okHttpClient = new OkHttpClient();
+                    /*OkHttpClient okHttpClient = new OkHttpClient();
                     FormBody formBody = new FormBody.Builder().add("name", username).add("password",password).build();
                     Request request = new Request.Builder()
                             .url(Constant.ADD)
@@ -112,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
                         Looper.loop();
                     } catch (IOException e) {
                         e.printStackTrace();
-                    }
+                    }*/
                 }
             }
         });
@@ -126,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
         mTvFace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,BindActivity.class);
+                Intent intent=new Intent(MainActivity.this, PlanActivity.class);
                 startActivity(intent);
             }
         });

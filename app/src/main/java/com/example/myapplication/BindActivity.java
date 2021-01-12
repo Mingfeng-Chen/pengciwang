@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.myapplication.Util.Utils;
+import com.usts.englishlearning.activity.WelcomeActivity;
+
 public class BindActivity extends AppCompatActivity {
     private Button mBtnBind;
     private EditText mEtTelephone;
@@ -28,7 +31,7 @@ public class BindActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"请输入正确的手机号",Toast.LENGTH_SHORT).show();
                 }else {
                     Toast.makeText(getApplicationContext(),"绑定成功",Toast.LENGTH_SHORT).show();
-                    Intent intent=new Intent(BindActivity.this,WordActivity.class);
+                    Intent intent=new Intent(BindActivity.this, WelcomeActivity.class);
                     startActivity(intent);
                 }
             }

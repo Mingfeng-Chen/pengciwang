@@ -22,11 +22,6 @@ public class NightActivity extends BaseActivity {
         setContentView(R.layout.activity_night);
     }
 
-    @Override
-    void afterRequestPermission(int requestCode, boolean isAllGranted) {
-
-    }
-
     public void modeDay(View v) {
         setEnableNightMode(false);
     }

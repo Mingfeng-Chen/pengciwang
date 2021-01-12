@@ -14,7 +14,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,19 +22,192 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BindActivity"></activity>
-        <activity android:name=".TestActivity" />
+        <activity android:name=".BindActivity" />
         <activity android:name=".NightActivity" />
         <activity android:name=".BaseActivity" />
-        <activity android:name=".WordActivity" />
         <activity android:name=".RetrieveActivity" />
-        <activity android:name=".FaceActivity" />
+        <activity android:name=".TranslateActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.usts.englishlearning.activity.SynchronyActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="com.usts.englishlearning.activity.AboutActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="com.usts.englishlearning.activity.FolderDetailActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="com.usts.englishlearning.activity.AddFolderActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="com.usts.englishlearning.activity.WordFolderActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="com.usts.englishlearning.activity.OCRActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="com.usts.englishlearning.activity.SearchActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" >
+        </activity>
+        <activity
+            android:name="com.usts.englishlearning.activity.PicCustomActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="com.usts.englishlearning.activity.UpdateActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
+        <receiver
+            android:name="com.usts.englishlearning.broadcast.NotifyReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="intent_update_word" />
+                <action android:name="intent_sound_word" />
+                <action android:name="intent_star_word" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.usts.englishlearning.activity.service.NotifyLearnService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity
+            android:name="com.usts.englishlearning.activity.LearnInNotifyActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
+        <receiver
+            android:name="com.usts.englishlearning.broadcast.AlarmReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="intent_alarm_learn" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name="com.usts.englishlearning.activity.AlarmActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
+        <meta-data
+            android:name="android.notch_support"
+            android:value="true" />
+        <meta-data
+            android:name="notch.config"
+            android:value="portrait|landscape" />
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.5" />
+
+        <activity
+            android:name="com.usts.englishlearning.activity.ShowActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="com.usts.englishlearning.activity.PlanActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
+        </activity>
+        <activity
+            android:name="com.usts.englishlearning.activity.ChartActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="com.usts.englishlearning.activity.ListActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="com.usts.englishlearning.activity.review.GameStatusActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppFullScreen"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="com.usts.englishlearning.activity.load.LoadGameActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppFullScreen"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="com.usts.englishlearning.activity.review.GameActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppFullScreen"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="com.usts.englishlearning.activity.review.MatchActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="com.usts.englishlearning.activity.review.SpeedActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="com.usts.englishlearning.activity.FinishActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="com.usts.englishlearning.activity.CalendarActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="com.usts.englishlearning.activity.WordDetailActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="com.usts.englishlearning.activity.ChangePlanActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
+        </activity>
+        <activity
+            android:name="com.usts.englishlearning.activity.load.LoadWordActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="com.usts.englishlearning.activity.ChooseWordDBActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="com.usts.englishlearning.activity.LearnWordActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="com.usts.englishlearning.activity.DaySentenceActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppFullScreen"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="com.usts.englishlearning.activity.WelcomeActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppFullScreen"
+            tools:ignore="LockedOrientationActivity">
+        </activity>
+        <activity
+            android:name="com.usts.englishlearning.activity.MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/IndexTheme"
+            tools:ignore="LockedOrientationActivity">
         </activity>
     </application>
 
