@@ -1,11 +1,9 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
-import org.json.JSONArray;
+
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.os.Looper;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -14,24 +12,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.Util.DBOpenHelper;
-import com.usts.englishlearning.activity.AddFolderActivity;
-import com.usts.englishlearning.activity.ListActivity;
-import com.usts.englishlearning.activity.PlanActivity;
-import com.example.myapplication.dao.Constant;
-import com.usts.englishlearning.config.ConfigData;
-import com.usts.englishlearning.database.User;
-import com.usts.englishlearning.database.UserConfig;
 
-import org.json.JSONArray;
-import org.litepal.LitePal;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import okhttp3.FormBody;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 /**
  * MainActivity
@@ -62,34 +47,39 @@ public class MainActivity extends AppCompatActivity {
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username=mEtUserName.getText().toString();
-                String password=mEtPassword.getText().toString();
+                final String username=mEtUserName.getText().toString();
+                final String password=mEtPassword.getText().toString();
                 if(username.isEmpty()){               //登录成功
                     Toast.makeText(getApplicationContext(),"用户名不能为空",Toast.LENGTH_SHORT).show();
                 }else if(password.isEmpty()){
                     Toast.makeText(getApplicationContext(),"密码不能为空",Toast.LENGTH_SHORT).show();
                 }else{
-                    /*OkHttpClient okHttpClient = new OkHttpClient();
-                    FormBody formBody = new FormBody.Builder().add("name", username).add("password",password).build();
-                    Request request = new Request.Builder()
-                            .url(Constant.GET)
-                            .post(formBody)
-                            .build();
-                    try (Response response = okHttpClient.newCall(request).execute()) {
-                        Looper.prepare();
-                        if (Boolean.parseBoolean(response.body().string()))
-                        {
-                            Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try{
+                                String json="{\n" +
+                                        "    \"name\":\""+username+"\",\n" +
+                                        "    \"password\":\""+password+"\"\n" +
+                                        "}";
+                                OkHttpClient client=new OkHttpClient();
+                                Request request=new Request.Builder()
+                                        .url("http://7c0b3e95.cpolar.io/demo/login")
+                                        .post(RequestBody.create(MediaType.parse("application/json"),json))
+                                        .build();
+                                Response response=client.newCall(request).execute();
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            } catch (Exception e){
+                                e.printStackTrace();
+                            }
                         }
-                        else
-                        {
-                            Toast.makeText(getApplicationContext(), "用户名或密码错误", Toast.LENGTH_SHORT).show();
-                        }
-                        Looper.loop();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }*/
-                    LitePal.initialize(getApplicationContext());
+                    }).start();
+                    /*LitePal.initialize(getApplicationContext());
                     List<User> users = LitePal.where("userName=?", username + "").find(User.class);
                     if (users.isEmpty()) {
                         User user = new User();
@@ -105,41 +95,49 @@ public class MainActivity extends AppCompatActivity {
                         userConfig.setCurrentBookId(-1);
                         userConfig.save();
                     }
-                    //ConfigData.setIsLogged(true);
-                    Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
+                    ConfigData.setIsLogged(true);
+                    Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();*/
                 }
             }
         });
         mBtnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username=mEtUserName.getText().toString();
-                String password=mEtPassword.getText().toString();
+                final String username=mEtUserName.getText().toString();
+                final String password=mEtPassword.getText().toString();
                 if(username.isEmpty()){               //登录成功
                     Toast.makeText(getApplicationContext(),"用户名不能为空",Toast.LENGTH_SHORT).show();
                 }else if(password.isEmpty()){
                     Toast.makeText(getApplicationContext(),"密码不能为空",Toast.LENGTH_SHORT).show();
                 }else{
-                    /*OkHttpClient okHttpClient = new OkHttpClient();
-                    FormBody formBody = new FormBody.Builder().add("name", username).add("password",password).build();
-                    Request request = new Request.Builder()
-                            .url(Constant.ADD)
-                            .post(formBody)
-                            .build();
-                    try (Response response = okHttpClient.newCall(request).execute()) {
-                        Looper.prepare();
-                        if (Boolean.parseBoolean(response.body().string()))
-                        {
-                            Toast.makeText(getApplicationContext(), "注册成功", Toast.LENGTH_SHORT).show();
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try{
+                                String json="{\n" +
+                                        "    \"name\":\""+username+"\",\n" +
+                                        "    \"password\":\""+password+"\"\n" +
+                                        "}";
+                                OkHttpClient client=new OkHttpClient();
+                                Request request=new Request.Builder()
+                                        .url("http://7c0b3e95.cpolar.io/demo/register")
+                                        .post(RequestBody.create(MediaType.parse("application/json"),json))
+                                        .build();
+                                Response response=client.newCall(request).execute();
+                                mDBOpenHelper.add(username,password);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getApplicationContext(), "注册成功", Toast.LENGTH_SHORT).show();
+                                        Intent intent=new Intent(MainActivity.this, BindActivity.class);
+                                        startActivity(intent);
+                                    }
+                                });
+                            } catch (Exception e){
+                                e.printStackTrace();
+                            }
                         }
-                        else
-                        {
-                            Toast.makeText(getApplicationContext(), "注册失败", Toast.LENGTH_SHORT).show();
-                        }
-                        Looper.loop();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }*/
+                    }).start();
                 }
             }
         });
@@ -153,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
         mTvFace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this, AddFolderActivity.class);
+                Intent intent=new Intent(MainActivity.this, com.usts.englishlearning.activity.MainActivity.class);
                 startActivity(intent);
             }
         });

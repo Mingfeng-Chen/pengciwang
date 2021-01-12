@@ -1,16 +1,22 @@
 package com.usts.englishlearning.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -24,11 +30,17 @@ import com.usts.englishlearning.config.ConstantData;
 import com.usts.englishlearning.database.UserConfig;
 import com.usts.englishlearning.database.Word;
 import com.usts.englishlearning.util.ActivityCollector;
+import com.usts.englishlearning.util.FileUtil;
+import com.usts.englishlearning.util.JsonHelper;
 import com.usts.englishlearning.util.TimeController;
 
 import org.litepal.LitePal;
 
 import java.util.List;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class ChangePlanActivity extends Activity {
 
@@ -42,7 +54,7 @@ public class ChangePlanActivity extends Activity {
 
     private Thread thread;
 
-    private int currentBookId;
+    private int currentBookId=1;
 
     private List<UserConfig> userConfigs;
 
@@ -50,6 +62,23 @@ public class ChangePlanActivity extends Activity {
     private final int DOWN_DONE = 2;
 
     private ProgressDialog progressDialog;
+    @SuppressLint("HandlerLeak")
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            switch (msg.what) {
+                case FINISH:
+                    // 等待框消失
+                    progressDialog.dismiss();
+                    // 重置上次学习时间
+                    ActivityCollector.startOtherActivity(ChangePlanActivity.this, MainActivity.class);
+                    break;
+                case DOWN_DONE:
+                    progressDialog.setMessage("已下载完成，正在解压分析数据中...");
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +91,47 @@ public class ChangePlanActivity extends Activity {
                 if(editText.getText().toString().equals("")){
                     Toast.makeText(getApplicationContext(),"输入不能为空",Toast.LENGTH_SHORT).show();
                 }else {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                    progressDialog = new ProgressDialog(ChangePlanActivity.this);
+                    progressDialog.setTitle("请稍等");
+                    progressDialog.setMessage("数据包正在下载中...");
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
+                    // 延迟两秒再运行，防止等待框不显示
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            // 开启线程分析数据
+                            thread = new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        OkHttpClient client = new OkHttpClient();
+                                        Request request = new Request.Builder()
+                                                .url(ConstantData.bookDownLoadAddressById(currentBookId))
+                                                .build();
+                                        Response response = client.newCall(request).execute();
+                                        Message message = new Message();
+                                        message.what = DOWN_DONE;
+                                        handler.sendMessage(message);
+                                        FileUtil.getFileByBytes(response.body().bytes(), "/Android/data/com.example.myapplication/files"+ "/" + ConstantData.DIR_TOTAL, ConstantData.bookFileNameById(currentBookId));
+                                        FileUtil.unZipFile("/Android/data/com.example.myapplication/files"+ "/" + ConstantData.DIR_TOTAL + "/" + ConstantData.bookFileNameById(currentBookId)
+                                                , getFilesDir() + "/" + ConstantData.DIR_TOTAL + "/" + ConstantData.DIR_AFTER_FINISH, false);
+                                    } catch (Exception e) {
+
+                                    }
+                                    JsonHelper.analyseDefaultAndSave(FileUtil.readLocalJson(ConstantData.DIR_TOTAL + "/" + ConstantData.DIR_AFTER_FINISH + "/" + ConstantData.bookFileNameById(currentBookId).replace(".zip", ".json")));
+                                    Message message = new Message();
+                                    message.what = FINISH;
+                                    handler.sendMessage(message);
+                                }
+                            });
+                            thread.start();
+                        }
+                    }, 500);
                     Toast.makeText(getApplicationContext(),"修改成功",Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
@@ -74,13 +143,13 @@ public class ChangePlanActivity extends Activity {
         textBook = findViewById(R.id.text_plan_chosen);
         textWordMaxNum = findViewById(R.id.text_max_word_num);
     }
-    /* @Override
+     @Override
     protected void onStart() {
         super.onStart();
         Log.d(TAG, "onStart: ");
         // 获得数据
         //List<UserConfig> userConfigs = LitePal.where("userId = ?", ConfigData.getSinaNumLogged() + "").find(UserConfig.class);
-        /*currentBookId = userConfigs.get(0).getCurrentBookId();
+        //currentBookId = userConfigs.get(0).getCurrentBookId();
 
         maxNum = ConstantData.wordTotalNumberById(currentBookId);
 
@@ -90,5 +159,5 @@ public class ChangePlanActivity extends Activity {
         // 设置书名
         textBook.setText(ConstantData.bookNameById(currentBookId));
 
-    }*/
+    }
 }

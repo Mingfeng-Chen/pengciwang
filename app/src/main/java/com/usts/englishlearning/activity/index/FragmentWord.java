@@ -251,9 +251,10 @@ public class FragmentWord extends Fragment implements View.OnClickListener {
             isOnClick = false;
         }
         // 设置界面数据
-        List<UserConfig> userConfigs = LitePal.where("userId = ?", ConfigData.getSinaNumLogged() + "").find(UserConfig.class);
-        currentBookId = userConfigs.get(0).getCurrentBookId();
-        textWordNum.setText("每日须学" + userConfigs.get(0).getWordNeedReciteNum() + "个单词");
+        //List<UserConfig> userConfigs = LitePal.where("userId = ?", ConfigData.getSinaNumLogged() + "").find(UserConfig.class);
+        //currentBookId = userConfigs.get(0).getCurrentBookId();
+        currentBookId=1;
+        //textWordNum.setText("每日须学" + userConfigs.get(0).getWordNeedReciteNum() + "个单词");
         textBook.setText(ConstantData.bookNameById(currentBookId));
         if (prepareData == 0)
             // 设置随机数据

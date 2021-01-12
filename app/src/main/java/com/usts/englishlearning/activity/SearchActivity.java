@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -29,7 +30,7 @@ import org.litepal.LitePal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchActivity extends BaseActivity {
+public class SearchActivity extends Activity {
 
     private RecyclerView recyclerSearch;
 
@@ -132,8 +133,8 @@ public class SearchActivity extends BaseActivity {
         searchAdapter.notifyDataSetChanged();
     }
 
-    @Override
+    /*@Override
     public void onBackPressed() {
         supportFinishAfterTransition();
-    }
+    }*/
 }

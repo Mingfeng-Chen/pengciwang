@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,7 +28,7 @@ public class RetrieveActivity extends AppCompatActivity {
     private EditText editTextPhoneNum,editTextCode;
     private String phoneNum,code;
     private EventHandler eh;
-    private DBOpenHelper dbOpenHelper=new DBOpenHelper(this);
+    private TextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +37,7 @@ public class RetrieveActivity extends AppCompatActivity {
         buttonLogin = findViewById(R.id.buttonLogin);
         editTextCode = findViewById(R.id.editTextCode);
         editTextPhoneNum = findViewById(R.id.editTextPhoneNum);
-
+        textView=findViewById(R.id.tv_1);
         eh = new EventHandler() {
             @Override
             public void afterEvent(int event, int result, Object data) {
@@ -47,7 +48,7 @@ public class RetrieveActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(RetrieveActivity.this,"登录成功",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RetrieveActivity.this,"找回成功",Toast.LENGTH_SHORT).show();
                             }
                         });
                     }else if (event == SMSSDK.EVENT_GET_VOICE_VERIFICATION_CODE){
@@ -119,11 +120,7 @@ public class RetrieveActivity extends AppCompatActivity {
                 if(!code.isEmpty()){
                     //提交验证码
                     SMSSDK.submitVerificationCode("86", phoneNum, code);
-                    String password=null;
-
-                    Toast.makeText(getApplicationContext(),password,Toast.LENGTH_LONG).show();
-                    Intent intent=new Intent(RetrieveActivity.this,MainActivity.class);//跳转到登录界面
-                    startActivity(intent);
+                    textView.append("1234");
                 }else{
                     Toast.makeText(getApplicationContext(),"请输入验证码",Toast.LENGTH_LONG).show();
                     return;

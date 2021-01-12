@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -23,14 +24,14 @@ import com.usts.englishlearning.activity.index.FragmentReview;
 import com.usts.englishlearning.activity.index.FragmentWord;
 import com.usts.englishlearning.util.ActivityCollector;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends AppCompatActivity {
 
     private Fragment fragWord, fragReview, fragMe;
 
     private Fragment[] fragments;
 
     //用于记录上个选择的Fragment
-    public static int lastFragment;
+    public static int lastFragment=0;
 
     private BottomNavigationView bottomNavigationView;
 
@@ -59,7 +60,7 @@ public class MainActivity extends BaseActivity {
             //bottomNavigationView.startAnimation(animation);
         }
 
-        initFragment();
+        //initFragment();
 
     }
 
