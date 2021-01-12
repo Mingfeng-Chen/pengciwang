@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.Util.DBOpenHelper;
+import com.usts.englishlearning.activity.AddFolderActivity;
 import com.usts.englishlearning.activity.ListActivity;
 import com.usts.englishlearning.activity.PlanActivity;
 import com.example.myapplication.dao.Constant;
@@ -152,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
         mTvFace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this, PlanActivity.class);
+                Intent intent=new Intent(MainActivity.this, AddFolderActivity.class);
                 startActivity(intent);
             }
         });

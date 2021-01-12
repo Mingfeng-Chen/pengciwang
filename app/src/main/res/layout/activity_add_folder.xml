@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:spinnerMode="dialog"
-                android:text="添加单词夹"
+                android:text="添加词库"
                 android:textColor="@color/colorBlack"
                 android:textSize="17sp"
                 android:textStyle="bold" />
@@ -125,7 +125,7 @@
                 android:layout_centerInParent="true"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
-                android:text="新建"
+                android:text="添加"
                 android:textColor="@color/colorFontInBlue"
                 android:textStyle="bold" />
 

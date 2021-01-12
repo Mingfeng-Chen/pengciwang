@@ -54,9 +54,18 @@ public class ChangePlanActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_plan);
+        setContentView(R.layout.activity_change_plan);
         init();
-
+        textGo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(editText.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(),"输入不能为空",Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(getApplicationContext(),"修改成功",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void init() {
@@ -65,13 +74,13 @@ public class ChangePlanActivity extends Activity {
         textBook = findViewById(R.id.text_plan_chosen);
         textWordMaxNum = findViewById(R.id.text_max_word_num);
     }
-    @Override
+    /* @Override
     protected void onStart() {
         super.onStart();
         Log.d(TAG, "onStart: ");
         // 获得数据
-        List<UserConfig> userConfigs = LitePal.where("userId = ?", ConfigData.getSinaNumLogged() + "").find(UserConfig.class);
-        currentBookId = userConfigs.get(0).getCurrentBookId();
+        //List<UserConfig> userConfigs = LitePal.where("userId = ?", ConfigData.getSinaNumLogged() + "").find(UserConfig.class);
+        /*currentBookId = userConfigs.get(0).getCurrentBookId();
 
         maxNum = ConstantData.wordTotalNumberById(currentBookId);
 
@@ -81,5 +90,5 @@ public class ChangePlanActivity extends Activity {
         // 设置书名
         textBook.setText(ConstantData.bookNameById(currentBookId));
 
-    }
+    }*/
 }

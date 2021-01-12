@@ -2,6 +2,7 @@ package com.usts.englishlearning.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -13,7 +14,7 @@ import com.example.myapplication.R;
 import com.usts.englishlearning.database.WordFolder;
 import com.usts.englishlearning.util.TimeController;
 
-public class AddFolderActivity extends BaseActivity {
+public class AddFolderActivity extends Activity {
 
     private EditText editName, editRemark;
 
@@ -43,7 +44,6 @@ public class AddFolderActivity extends BaseActivity {
                 }
             }
         });
-
     }
 
     private void init() {
