@@ -11,7 +11,7 @@ android {
     buildToolsVersion "30.0.2"
     defaultConfig {
         applicationId "com.example.myapplication"
-        minSdkVersion 20
+        minSdkVersion 16
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -22,6 +22,14 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {//指定使用的JDK1.8
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
+    dataBinding {
+        enabled = true
     }
 }
 
@@ -39,4 +47,9 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.6.0'
     implementation 'com.squareup.okio:okio:1.11.0'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
+    implementation 'com.google.code.gson:gson:2.7'
+    //数据解析
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    //Android SQLite操作框架
+    implementation 'org.litepal.guolindev:core:3.1.1'
 }

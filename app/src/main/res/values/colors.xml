@@ -6,6 +6,7 @@
     <color name="text_black_white">#ff000000</color>
     <color name="color_bg_name">#80000000</color>
     <color name="color_bg_notification">#80000000</color>
+    <color name="colorGreen">#00F800</color>
     <color name="colorMainBlue">#3675FF</color>
     <color name="colorLightBlue">#4089ff</color>
     <color name="colorLightBlueN">#3E6AB1</color>
@@ -40,4 +41,9 @@
     <color name="colorBgWhite">#FFFFFF</color>
     <color name="colorBgWhiteN">#424242</color>
     <color name="colorBgLittleWhite">#FBFBFD</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlue">#2196F3</color>
+    <color name="colorBackground">#F7F7F7</color>
+    <color name="colorGray">#EDEEF2</color>
+
 </resources>
