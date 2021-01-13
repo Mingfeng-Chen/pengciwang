@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <!--数据库名称-->
+    <dbname value="database" />
+    <!--数据库版本-->
+    <version value="2" />
+
+    <!--映射模型-->
+    <list>
+        <mapping class="com.example.myapplication.domain.Word"/>
+        <mapping class="com.example.myapplication.domain.Interpretation"/>
+        <mapping class="com.example.myapplication.domain.Phrase"/>
+        <mapping class="com.example.myapplication.domain.UserConfig"/>
+        <mapping class="com.example.myapplication.domain.Sentence"/>
+    </list>
+</litepal>
