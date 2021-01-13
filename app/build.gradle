@@ -89,4 +89,5 @@ dependencies {
     implementation 'cz.msebera.android:httpclient:4.4.1.1'
     implementation 'com.loopj.android:android-async-http:1.4.9'
     implementation 'org.jetbrains:annotations-java5:15.0'
+    implementation 'com.android.support:support-annotations:21.0.2'
 }

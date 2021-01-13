@@ -114,6 +114,11 @@ public class SearchActivity extends Activity {
 
     private void setData(String s) {
         itemSearches.clear();
+        LitePal.initialize(this);
+        Word word1=new Word();
+        word1.setWordId(1);
+        word1.setWord("a");
+        word1.save();
         List<Word> words = LitePal.where("word like ?", s + "%").select("wordId", "word", "usPhone").limit(10).find(Word.class);
         if (!words.isEmpty()) {
             for (Word word : words) {

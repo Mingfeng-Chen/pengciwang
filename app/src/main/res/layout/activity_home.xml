@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorLightWhite"
+    android:background="@color/act_background_black_white"
     android:orientation="vertical"
     tools:context="com.usts.englishlearning.activity.MainActivity">
 
@@ -25,5 +25,6 @@
         app:itemTextColor="@color/selector_bottom"
         app:labelVisibilityMode="unlabeled"
         app:menu="@menu/bottom_nav_menu" />
+
 
 </RelativeLayout>

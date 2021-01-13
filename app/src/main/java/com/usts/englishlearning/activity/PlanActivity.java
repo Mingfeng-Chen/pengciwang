@@ -45,15 +45,17 @@ public class PlanActivity extends Activity {
         setContentView(R.layout.activity_plan);
         init();
 
-        /*updateData();
-
-        List<UserConfig> userConfigs = LitePal.where("userId = ?", com.usts.englishlearning.config.ConfigData.getSinaNumLogged() + "").find(UserConfig.class);
-        int bookId = userConfigs.get(0).getCurrentBookId();
-        final int wordNum = ConstantData.wordTotalNumberById(bookId);
-        int dailyNum = userConfigs.get(0).getWordNeedReciteNum();*/
+        //updateData();
         int bookId=1;
-        final int wordNum=5500;
         int dailyNum=5;
+        int wordNum=5500;
+        //LitePal.initialize(this);
+        /*List<UserConfig> userConfigs = LitePal.where("userId = ?", 0 + "").find(UserConfig.class);
+        if(!userConfigs.isEmpty()){
+            bookId = userConfigs.get(0).getCurrentBookId();
+            wordNum = ConstantData.wordTotalNumberById(bookId);
+            dailyNum = userConfigs.get(0).getWordNeedReciteNum();
+        }*/
 
         Glide.with(this).load(ConstantData.bookPicById(bookId)).into(imgBook);
 
@@ -61,7 +63,7 @@ public class PlanActivity extends Activity {
         textBookName.setText(ConstantData.bookNameById(bookId));
         textDaily.setText("每日学习单词：" + dailyNum);
 
-        int days = wordNum / dailyNum + 1;
+        int days = 5;
         textExpect.setText("预计将于" + TimeController.getDayAgoOrAfterString(days) + "初学完所有单词");
 
         //textInformation.setText("单词数量设置须介于5-" + wordNum + "之间");

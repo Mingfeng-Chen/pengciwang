@@ -7,31 +7,42 @@ import android.transition.Fade;
 import android.transition.Slide;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.myapplication.BaseActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.example.myapplication.R;
 import com.usts.englishlearning.activity.index.FragmentMe;
 import com.usts.englishlearning.activity.index.FragmentReview;
 import com.usts.englishlearning.activity.index.FragmentWord;
+import com.usts.englishlearning.database.User;
+import com.usts.englishlearning.database.UserConfig;
 import com.usts.englishlearning.util.ActivityCollector;
 
-public class MainActivity extends AppCompatActivity {
+import org.litepal.LitePal;
+
+import java.util.List;
+
+public class MainActivity extends BaseActivity {
 
     private Fragment fragWord, fragReview, fragMe;
 
     private Fragment[] fragments;
-
+    private Button day;
+    private Button night;
     //用于记录上个选择的Fragment
-    public static int lastFragment=0;
+    public static int lastFragment;
 
     private BottomNavigationView bottomNavigationView;
 
@@ -49,7 +60,20 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: ");
 
         init();
-
+        LitePal.initialize(this);
+        List<User> users = LitePal.where("userId = ?",0 + "").find(User.class);
+        if(users.isEmpty()){
+            User user = new User();
+            user.setUserId(0);// 测试
+            user.setUserMoney(0);
+            user.setUserWordNumber(0);
+            user.save();
+            UserConfig userConfig = new UserConfig();
+            userConfig.setUserId(0);
+            userConfig.setCurrentBookId(1);
+            userConfig.setWordNeedReciteNum(5);
+            userConfig.save();
+        }
         if (needRefresh) {
 
             TranslateAnimation animation = new TranslateAnimation(
@@ -60,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
             //bottomNavigationView.startAnimation(animation);
         }
 
-        //initFragment();
+        initFragment();
 
     }
 
@@ -146,4 +170,11 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    public void modeDay(View v) {
+        setEnableNightMode(false);
+    }
+
+    public void modeNight(View v) {
+        setEnableNightMode(true);
+    }
 }

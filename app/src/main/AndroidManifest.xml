@@ -28,6 +28,8 @@
         <activity android:name=".BaseActivity" />
         <activity android:name=".RetrieveActivity" />
         <activity android:name=".TranslateActivity"/>
+        <activity android:name=".ChooseWrongWordsActivity"/>
+        <activity android:name=".WrongWordsListActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

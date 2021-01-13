@@ -49,7 +49,7 @@ public class LoadWordActivity extends BaseActivity {
         Glide.with(this).load(R.drawable.pic_load).into(imgLoading);
 
         // 准备数据
-        thread = new Thread(new Runnable() {
+        /*thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 List<UserConfig> userConfigs = LitePal.where("userId = ?", ConfigData.getSinaNumLogged() + "").find(UserConfig.class);
@@ -89,7 +89,7 @@ public class LoadWordActivity extends BaseActivity {
             }
 
         };
-        mHandler.postDelayed(runnable, 120);
+        mHandler.postDelayed(runnable, 120);*/
 
     }
 

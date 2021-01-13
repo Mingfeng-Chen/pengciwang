@@ -1,6 +1,7 @@
 package com.usts.englishlearning.activity.review;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.animation.ObjectAnimator;
@@ -37,7 +38,7 @@ import java.util.List;
 
 import me.grantland.widget.AutofitTextView;
 
-public class SpeedActivity extends BaseActivity implements View.OnClickListener {
+public class SpeedActivity extends AppCompatActivity implements View.OnClickListener {
 
     private CardView cardImg;
 
@@ -69,12 +70,12 @@ public class SpeedActivity extends BaseActivity implements View.OnClickListener 
 
         init();
 
-        windowExplode();
+        //windowExplode();
 
         initAnimation();
 
-        showWord();
-        playWord();
+        //showWord();
+        //playWord();
 
     }
 

@@ -23,6 +23,7 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
+import com.usts.englishlearning.activity.AddFolderActivity;
 import com.usts.englishlearning.activity.BaseActivity;
 import com.usts.englishlearning.activity.DaySentenceActivity;
 import com.usts.englishlearning.activity.MainActivity;
@@ -80,7 +81,7 @@ public class FragmentWord extends Fragment implements View.OnClickListener {
 
         Log.d(TAG, "onActivityCreated: ");
 
-        if (MainActivity.needRefresh) {
+        /*if (MainActivity.needRefresh) {
             prepareData = 0;
             new Thread(new Runnable() {
                 @Override
@@ -88,7 +89,7 @@ public class FragmentWord extends Fragment implements View.OnClickListener {
                     BaseActivity.prepareDailyData();
                 }
             }).start();
-        }
+        }*/
 
     }
 
@@ -174,7 +175,7 @@ public class FragmentWord extends Fragment implements View.OnClickListener {
                 startActivity(intent2, activityOptionsCompat2.toBundle());
                 break;
             case R.id.layout_main_words:
-                Intent intent3 = new Intent(getActivity(), WordFolderActivity.class);
+                Intent intent3 = new Intent(getActivity(), AddFolderActivity.class);
                 startActivity(intent3, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
                 break;
         }
@@ -211,9 +212,10 @@ public class FragmentWord extends Fragment implements View.OnClickListener {
     public void onStart() {
         super.onStart();
         Log.d(TAG, "onStart: ");
-        Calendar calendar = Calendar.getInstance();
+        /*Calendar calendar = Calendar.getInstance();
         textDate.setText(calendar.get(Calendar.DATE) + "");
         textMonth.setText(DaySentenceActivity.getMonthName(calendar));
+        LitePal.initialize(getContext());
         List<Word> words = LitePal.where("deepMasterTimes <> ?", 3 + "").select("wordId").find(Word.class);
         List<MyDate> myDates = LitePal.where("year = ? and month = ? and date = ? and userId = ?",
                 calendar.get(Calendar.YEAR) + "",
@@ -258,6 +260,6 @@ public class FragmentWord extends Fragment implements View.OnClickListener {
         textBook.setText(ConstantData.bookNameById(currentBookId));
         if (prepareData == 0)
             // 设置随机数据
-            setRandomWord();
+            setRandomWord();*/
     }
 }

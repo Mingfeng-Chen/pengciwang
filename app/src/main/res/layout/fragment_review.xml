@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorLightWhite"
+    android:background="@color/act_background_black_white"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -127,7 +127,7 @@
                                     android:textStyle="bold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="单词速过"
+                                    android:text="限时模式"
                                     android:textColor="@color/colorBlack"
                                     android:textSize="16sp" />
 
@@ -176,7 +176,7 @@
                                     android:textStyle="bold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="多词匹配"
+                                    android:text="在线翻译"
                                     android:textColor="@color/colorBlack"
                                     android:textSize="16sp" />
 
@@ -184,7 +184,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
-                                    android:text="写作"
+                                    android:text="英汉互译"
                                     android:textColor="@color/colorGrey"
                                     android:textSize="10sp" />
 
@@ -211,7 +211,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="20dp"
-                android:text="趣味游戏"
+                android:text="趣味错词本"
                 android:textColor="@color/colorBlack"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -239,7 +239,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="30dp"
-                        android:text="猫追老鼠"
+                        android:text="复习巩固"
                         android:textStyle="bold"
                         android:textColor="@color/colorMainFont"
                         android:textSize="18sp" />

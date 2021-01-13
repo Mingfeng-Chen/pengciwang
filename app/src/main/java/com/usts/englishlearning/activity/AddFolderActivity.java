@@ -11,8 +11,13 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.usts.englishlearning.database.Word;
 import com.usts.englishlearning.database.WordFolder;
 import com.usts.englishlearning.util.TimeController;
+
+import org.litepal.LitePal;
+
+import java.util.Random;
 
 public class AddFolderActivity extends Activity {
 
@@ -37,6 +42,12 @@ public class AddFolderActivity extends Activity {
                     if (!TextUtils.isEmpty(editRemark.getText().toString().trim()))
                         wordFolder.setRemark(editRemark.getText().toString().trim());
                     wordFolder.save();
+                    LitePal.initialize(getApplicationContext());
+                    Word word=new Word();
+                    Random random=new Random();
+                    word.setWordId(random.nextInt()+1000);
+                    word.setWord(editName.getText().toString());
+                    word.save();
                     onBackPressed();
                     Toast.makeText(AddFolderActivity.this, "新建成功", Toast.LENGTH_SHORT).show();
                 } else {

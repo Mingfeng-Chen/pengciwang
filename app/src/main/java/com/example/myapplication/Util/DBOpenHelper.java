@@ -68,8 +68,10 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     public void update(String password){
         db.execSQL("UPDATE user SET password = ?",new Object[]{password});
     }
-    public void query(String telephone){
-
+    public String query(String telephone){
+        Cursor cursor=db.query("user", new String[]{"password"},"telephone=?",new String[]{telephone},null,null,null);
+        String res=cursor.toString();
+        return res;
     }
     /**
      * @return
@@ -77,7 +79,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     public ArrayList<User> getAllData(){
 
         ArrayList<User> list = new ArrayList<User>();
-        Cursor cursor = db.query("user",null,null,null,null,null,"name DESC");
+        Cursor cursor = db.query("user",null,null,null,null,null,"null");
         while(cursor.moveToNext()){
             String name = cursor.getString(cursor.getColumnIndex("name"));
             String password = cursor.getString(cursor.getColumnIndex("password"));

@@ -69,12 +69,12 @@ public class ChangePlanActivity extends Activity {
             switch (msg.what) {
                 case FINISH:
                     // 等待框消失
-                    progressDialog.dismiss();
+                    //progressDialog.dismiss();
                     // 重置上次学习时间
                     ActivityCollector.startOtherActivity(ChangePlanActivity.this, MainActivity.class);
                     break;
                 case DOWN_DONE:
-                    progressDialog.setMessage("已下载完成，正在解压分析数据中...");
+                    //progressDialog.setMessage("已下载完成，正在解压分析数据中...");
                     break;
             }
         }
@@ -91,15 +91,20 @@ public class ChangePlanActivity extends Activity {
                 if(editText.getText().toString().equals("")){
                     Toast.makeText(getApplicationContext(),"输入不能为空",Toast.LENGTH_SHORT).show();
                 }else {
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    /*InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-                    progressDialog = new ProgressDialog(ChangePlanActivity.this);
+                    /*progressDialog = new ProgressDialog(ChangePlanActivity.this);
                     progressDialog.setTitle("请稍等");
                     progressDialog.setMessage("数据包正在下载中...");
                     progressDialog.setCancelable(false);
-                    progressDialog.show();
+                    progressDialog.show();*/
+                    /*LitePal.initialize(getApplicationContext());
+                    List<UserConfig> userConfigs = LitePal.where("userId = ?", 0 + "").find(UserConfig.class);
+                    if(!userConfigs.isEmpty()){
+                        userConfigs.get(0).setWordNeedReciteNum(Integer.parseInt(editText.getText().toString()));
+                    }
                     // 延迟两秒再运行，防止等待框不显示
-                    new Handler().postDelayed(new Runnable() {
+                    /*new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             // 开启线程分析数据
@@ -129,9 +134,10 @@ public class ChangePlanActivity extends Activity {
                             });
                             thread.start();
                         }
-                    }, 500);
+                    }, 500);*/
                     Toast.makeText(getApplicationContext(),"修改成功",Toast.LENGTH_SHORT).show();
-
+                    Intent intent=new Intent(ChangePlanActivity.this, MainActivity.class);
+                    startActivity(intent);
                 }
             }
         });

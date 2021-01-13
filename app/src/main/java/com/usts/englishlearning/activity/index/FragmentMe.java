@@ -1,51 +1,27 @@
 package com.usts.englishlearning.activity.index;
 
-import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.DatePicker;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
-import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
 import com.usts.englishlearning.activity.AboutActivity;
 import com.usts.englishlearning.activity.AlarmActivity;
 import com.usts.englishlearning.activity.CalendarActivity;
 import com.usts.englishlearning.activity.ChartActivity;
-import com.usts.englishlearning.activity.LearnInNotifyActivity;
 import com.usts.englishlearning.activity.ListActivity;
-import com.usts.englishlearning.activity.MainActivity;
 import com.usts.englishlearning.activity.PlanActivity;
-import com.usts.englishlearning.activity.SynchronyActivity;
-import com.usts.englishlearning.config.ConfigData;
-import com.usts.englishlearning.database.MyDate;
-import com.usts.englishlearning.database.User;
-import com.usts.englishlearning.util.MyApplication;
-import com.usts.englishlearning.util.TimeController;
-
-import org.litepal.LitePal;
-
-import java.util.Date;
-import java.util.List;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FragmentMe extends Fragment implements View.OnClickListener {
 
@@ -58,9 +34,8 @@ public class FragmentMe extends Fragment implements View.OnClickListener {
     private TextView textName;
 
     private Switch aSwitchNight;
-
+    private boolean isNight;
     private static final String TAG = "FragmentMe";
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -75,26 +50,30 @@ public class FragmentMe extends Fragment implements View.OnClickListener {
         init();
 
         Log.d(TAG, "onActivityCreated: ");
-
-        boolean isNight = ConfigData.getIsNight();
+        /*final Data data=(Data)getContext();
+        isNight=data.getNight();
         if (isNight)
             aSwitchNight.setChecked(true);
         else
             aSwitchNight.setChecked(false);
-
         // 设置头像和用户名信息
+        /*LitePal.initialize(getContext());
         List<User> userList = LitePal.where("userId = ?", ConfigData.getSinaNumLogged() + "").find(User.class);
-        textName.setText(userList.get(0).getUserName());
+        textName.setText(userList.get(0).getUserName());*/
 
-        aSwitchNight.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        /*aSwitchNight.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    ConfigData.setIsNight(true);
+                    data.setNight(true);
+                    //ConfigData.setIsNight(true);
+                    isNight=true;
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    ConfigData.setIsNight(false);
+                    //ConfigData.setIsNight(false);
+                    data.setNight(false);
+                    isNight=false;
                 }
                 MainActivity.needRefresh = false;
                 MainActivity.lastFragment = 2;
@@ -103,7 +82,7 @@ public class FragmentMe extends Fragment implements View.OnClickListener {
             }
         });
 
-        layoutMoney.setOnClickListener(new View.OnClickListener() {
+        /*layoutMoney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String[] date = TimeController.getStringDate(TimeController.getCurrentDateStamp()).split("-");
@@ -158,7 +137,7 @@ public class FragmentMe extends Fragment implements View.OnClickListener {
                     Toast.makeText(MyApplication.getContext(), "抱歉，你的铜板个数还不足要求。必须满足100个铜板才可以补打卡哦", Toast.LENGTH_SHORT).show();
                 }
             }
-        });
+        });*/
 
     }
 
@@ -175,16 +154,16 @@ public class FragmentMe extends Fragment implements View.OnClickListener {
         layoutData.setOnClickListener(this);
         layoutPlan = getActivity().findViewById(R.id.layout_me_plan);
         layoutPlan.setOnClickListener(this);
-        aSwitchNight = getActivity().findViewById(R.id.switch_night);
+        //aSwitchNight = getActivity().findViewById(R.id.switch_night);
         layoutAlarm = getActivity().findViewById(R.id.layout_me_alarm);
         layoutAlarm.setOnClickListener(this);
-        layoutNotify = getActivity().findViewById(R.id.layout_me_notify);
-        layoutNotify.setOnClickListener(this);
+        //layoutNotify = getActivity().findViewById(R.id.layout_me_notify);
+        //layoutNotify.setOnClickListener(this);
         layoutMoney = getActivity().findViewById(R.id.layout_me_money);
         layoutAbout = getActivity().findViewById(R.id.layout_me_about);
         layoutAbout.setOnClickListener(this);
-        layoutSyno = getActivity().findViewById(R.id.layout_me_syno);
-        layoutSyno.setOnClickListener(this);
+        //layoutSyno = getActivity().findViewById(R.id.layout_me_syno);
+        //layoutSyno.setOnClickListener(this);
         textName = getActivity().findViewById(R.id.text_me_name);
     }
 
@@ -207,14 +186,8 @@ public class FragmentMe extends Fragment implements View.OnClickListener {
             case R.id.layout_me_alarm:
                 intent.setClass(getActivity(), AlarmActivity.class);
                 break;
-            case R.id.layout_me_notify:
-                intent.setClass(getActivity(), LearnInNotifyActivity.class);
-                break;
             case R.id.layout_me_about:
                 intent.setClass(getActivity(), AboutActivity.class);
-                break;
-            case R.id.layout_me_syno:
-                intent.setClass(getActivity(), SynchronyActivity.class);
                 break;
         }
         startActivity(intent);
@@ -223,17 +196,17 @@ public class FragmentMe extends Fragment implements View.OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
-        updateData();
+        //updateData();
     }
 
     private void updateData() {
         // 设置天数
-        List<MyDate> myDateList = LitePal.where("userId = ?", ConfigData.getSinaNumLogged() + "").find(MyDate.class);
+        /*List<MyDate> myDateList = LitePal.where("userId = ?", ConfigData.getSinaNumLogged() + "").find(MyDate.class);
         textDays.setText(myDateList.size() + "");
         // 设置单词数与金币数
         List<User> userList = LitePal.where("userId = ?", ConfigData.getSinaNumLogged() + "").find(User.class);
         textWordNum.setText(userList.get(0).getUserWordNumber() + "");
-        textMoney.setText(userList.get(0).getUserMoney() + "");
+        textMoney.setText(userList.get(0).getUserMoney() + "");*/
     }
 
 }

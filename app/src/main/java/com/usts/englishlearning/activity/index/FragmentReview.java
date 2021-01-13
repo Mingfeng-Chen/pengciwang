@@ -27,6 +27,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.example.myapplication.ChooseWrongWordsActivity;
+import com.example.myapplication.NightActivity;
+import com.example.myapplication.TranslateActivity;
 import com.google.gson.Gson;
 import com.example.myapplication.R;
 import com.usts.englishlearning.activity.OCRActivity;
@@ -127,7 +130,7 @@ public class FragmentReview extends Fragment implements View.OnClickListener {
         super.onActivityCreated(savedInstanceState);
 
         init();
-
+        //LitePal.initialize(getContext());
         // 设置头像
         /*List<User> userList = LitePal.where("userId = ?", ConfigData.getSinaNumLogged() + "").find(User.class);
         Glide.with(MyApplication.getContext()).load(userList.get(0).getUserProfile()).into(imgHead);*/
@@ -138,11 +141,29 @@ public class FragmentReview extends Fragment implements View.OnClickListener {
         layoutPhoto = getActivity().findViewById(R.id.layout_re_photo);
         layoutPhoto.setOnClickListener(this);
         layoutSpeed = getActivity().findViewById(R.id.layout_re_speed);
-        layoutSpeed.setOnClickListener(this);
+        layoutSpeed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(), ChooseWrongWordsActivity.class);//改为限时模式
+                startActivity(intent);
+            }
+        });
         layoutMatch = getActivity().findViewById(R.id.layout_re_match);
-        layoutMatch.setOnClickListener(this);
+        layoutMatch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(),TranslateActivity.class);
+                startActivity(intent);
+            }
+        });
         layoutGame = getActivity().findViewById(R.id.layout_re_game);
-        layoutGame.setOnClickListener(this);
+        layoutGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(),ChooseWrongWordsActivity.class);
+                startActivity(intent);
+            }
+        });
         imgHead = getActivity().findViewById(R.id.img_me_head);
     }
 
@@ -150,10 +171,10 @@ public class FragmentReview extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         Intent intent = new Intent();
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         switch (v.getId()) {
             case R.id.layout_re_speed:
-                showProgressDialog("数据准备中...");
+                /*showProgressDialog("数据准备中...");
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -162,10 +183,10 @@ public class FragmentReview extends Fragment implements View.OnClickListener {
                         message.what = LOAD_SPEED;
                         handler.sendMessage(message);
                     }
-                }).start();
+                }).start();*/
                 break;
             case R.id.layout_re_match:
-                showProgressDialog("数据准备中...");
+                /*showProgressDialog("数据准备中...");
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -174,10 +195,10 @@ public class FragmentReview extends Fragment implements View.OnClickListener {
                         message.what = LOAD_DONE;
                         handler.sendMessage(message);
                     }
-                }).start();
+                }).start();*/
                 break;
             case R.id.layout_re_game:
-                intent.setClass(MyApplication.getContext(), LoadGameActivity.class);
+                intent.setClass(MyApplication.getContext(), ChooseWrongWordsActivity.class);
                 startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
                 break;
             case R.id.layout_re_photo:
@@ -222,7 +243,7 @@ public class FragmentReview extends Fragment implements View.OnClickListener {
         progressDialog.show();
     }
 
-    @Override
+    /*@Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             final Intent intent = data;
@@ -390,6 +411,6 @@ public class FragmentReview extends Fragment implements View.OnClickListener {
             // 添加数据
             SpeedActivity.wordList.add(words.get(randomId[i]));
         }
-    }
+    }*/
 
 }
