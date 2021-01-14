@@ -24,11 +24,11 @@ import java.util.List;
 
 /**
  * 背单词Activity
- * @author Fenglc
- */
+         * @author Fenglc
+        */
 public class NormalReciteActivity extends BaseActivity implements View.OnClickListener{
 
-    private int currentModel;
+    private int currentModel = 0;
     //复习以前学过的单词模式
     private final int REVIEW_LEARNED_BEFORE = 0;
     //学习新单词模式
@@ -61,6 +61,8 @@ public class NormalReciteActivity extends BaseActivity implements View.OnClickLi
     private Word currentWord = null;
     //当前单词的提示
     private String currentWordHint;
+    //模式转换标记
+    private boolean switchFlag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,11 +72,7 @@ public class NormalReciteActivity extends BaseActivity implements View.OnClickLi
         init();
         need2LearnNumTV.setText(WordController.needLearnWords.size()+"");
         need2ReviewNumTV.setText(WordController.needReviewWords.size()+"");
-        if(WordController.needReviewWords.size() == 0)
-            currentModel = LEARN_MODE;
-        else
-            currentModel = REVIEW_LEARNED_BEFORE;
-        nextWord(currentModel);
+        nextWord();
 
 
     }
@@ -121,33 +119,33 @@ public class NormalReciteActivity extends BaseActivity implements View.OnClickLi
         switch (v.getId()){
             //返回首页
             case R.id.imageBtn_backBtn:
-                //TODO 跳转到首页
-                Intent intent = new Intent(NormalReciteActivity.this, LoadWordActivity.class);
+                Intent intent = new Intent(NormalReciteActivity.this, HomeActivity.class);
+                startActivity(intent);
                 break;
             case R.id.btn_choice1:
                 try {
-                    judgeChoice(choicesBtn[0],v);
+                    judgeChoice(choicesBtn[0]);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 break;
             case R.id.btn_choice2:
                 try {
-                    judgeChoice(choicesBtn[1],v);
+                    judgeChoice(choicesBtn[1]);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 break;
             case R.id.btn_choice3:
                 try {
-                    judgeChoice(choicesBtn[2],v);
+                    judgeChoice(choicesBtn[2]);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 break;
             case R.id.btn_choice4:
                 try {
-                    judgeChoice(choicesBtn[3],v);
+                    judgeChoice(choicesBtn[3]);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -162,7 +160,7 @@ public class NormalReciteActivity extends BaseActivity implements View.OnClickLi
                 dialog.setOnOKListener(new CheckWordDialog.OnOKListener() {
                     @Override
                     public void onOK(CheckWordDialog dialog) {
-                        nextWord(currentModel);
+                        nextWord();
                     }
                 });
                 dialog.show();
@@ -190,15 +188,12 @@ public class NormalReciteActivity extends BaseActivity implements View.OnClickLi
         }
     }
     //判断选择是否正确，并进行相应操作
-    public void judgeChoice(Button btn, View v) throws InterruptedException {
+    public void judgeChoice(Button btn) throws InterruptedException {
         //选择正确
         if(btn.getId() == correctChoiceId){
-            //背景变为绿色
-            btn.setBackground(getResources().getDrawable(R.drawable.bg_correct_word_choice));
-            v.invalidate();
             //暂停0.5秒后转到下一个单词
             Thread.sleep(500);
-            nextWord(currentModel);
+            nextWord();
         }else{
             btn.setEnabled(false);
             //选择错误，将按钮背景变为红色，不可选中
@@ -206,7 +201,7 @@ public class NormalReciteActivity extends BaseActivity implements View.OnClickLi
         }
     }
     //下一个单词，并在必要时切换模式
-    public void nextWord(int currentModel){
+    public void nextWord(){
         int need2LearnNum, need2ReviewNum;
         defaultLayout();
         if (currentModel == REVIEW_LEARNED_BEFORE){
@@ -218,26 +213,30 @@ public class NormalReciteActivity extends BaseActivity implements View.OnClickLi
             need2LearnNumTV.setText(need2LearnNum+"");
             if(need2ReviewNum == 0){
                 currentModel = LEARN_MODE;
+                switchFlag = true;
             }else{
                 ShowNewWord(WordController.reviewOldWord());
             }
         }
         if(currentModel == LEARN_MODE){
-            if(currentWord != null)
+            if(currentWord != null && switchFlag != true)
                 WordController.learnNewWordDone(currentWord.getWordId());
+            switchFlag = false;
             need2ReviewNum = WordController.justLearnedWords.size();
             need2ReviewNumTV.setText(need2ReviewNum+"");
             need2LearnNum = WordController.needLearnWords.size();
             need2LearnNumTV.setText(need2LearnNum+"");
             if(need2LearnNum == 0){
                 currentModel = REVIEW_JUST_LEARNED;
+                switchFlag = true;
             }else{
                 ShowNewWord(WordController.learnNewWord());
             }
         }
         if(currentModel == REVIEW_JUST_LEARNED){
-            if(currentWord != null)
+            if(currentWord != null && switchFlag != true)
                 WordController.reviewNewWordDone(currentWord.getWordId());
+            switchFlag = false;
             need2ReviewNum = WordController.justLearnedWords.size();
             need2ReviewNumTV.setText(need2ReviewNum+"");
             need2LearnNum = WordController.needLearnWords.size();
@@ -252,12 +251,7 @@ public class NormalReciteActivity extends BaseActivity implements View.OnClickLi
     //改变当前单词并显示
     public void ShowNewWord(int wordId){
         currentWord = LitePal.where("wordId = ?", wordId+"").find(Word.class).get(0);
-        // 得到该单词的释义
-        List<Interpretation> interpretations = LitePal.where("wordId = ?",wordId + "").find(Interpretation.class);
-        StringBuilder meaning = new StringBuilder();
-        if (!interpretations.isEmpty()) {
-            meaning.append(interpretations.get(0).toString());
-        }
+        String meaning = WordController.getWordInterpretation(wordId);
         currentWordTV.setText(currentWord.getWord());
         pronunciationTV.setText(currentWord.getUkPhone());
         //随机选择一个button作为正确选项
@@ -277,13 +271,17 @@ public class NormalReciteActivity extends BaseActivity implements View.OnClickLi
         //显示收藏状态
         showCollectedStatus();
         //获取提示
-        Sentence currentWordSentence = LitePal.where("wordId = ?", currentWord.getWordId()+"").find(Sentence.class).get(0);
-        currentWordHint = currentWordSentence.toString();
+        try {
+            Sentence currentWordSentence = LitePal.where("wordId = ?", currentWord.getWordId()+"").find(Sentence.class).get(0);
+            currentWordHint = currentWordSentence.toString();
+        }catch (IndexOutOfBoundsException e){
+            currentWordHint = "暂无提示";
+        }
         //显示上一个单词
         showLastWord();
         //改变上一个单词
         lastWord = currentWord.getWord();
-        lastWordMeaning = meaning.toString();
+        lastWordMeaning = meaning;
     }
     //显示上一个单词
     public void showLastWord(){
@@ -305,7 +303,9 @@ public class NormalReciteActivity extends BaseActivity implements View.OnClickLi
     }
     //本次学习结束
     public void learnFinish(){
-        //TODO
+
+        Intent mIntent = new Intent(NormalReciteActivity.this, ReportActivity.class);
+        startActivity(mIntent);
     }
     //将布局恢复成初始状态
     public void defaultLayout(){

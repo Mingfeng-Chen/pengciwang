@@ -27,20 +27,17 @@ public class LoadWordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load_word);
-        //TODO 读Json放入数据库，测试，实际应当放在其他的Activity中
-        FileUtil.saveLocalJson2Data(Constant.CET4_BOOK_1);
-        JsonHelper.analyseDefaultAndSave(FileUtil.readLocalJson(Constant.CET4_BOOK_1));
         /****测试-冯凌畅****/
-        UserConfig userConfig1 = new UserConfig();
+        /*UserConfig userConfig1 = new UserConfig();
         userConfig1.setId(1);
         userConfig1.setLastStartTime(0);
         userConfig1.setUserId(1);
         userConfig1.setWordNeedReciteNum(5);
         userConfig1.setLastStartTime(0);
         userConfig1.save();
-        ConfigData.setUserNumLogged(1);
+        ConfigData.setUserNumLogged(1);*/
         /****测试-冯凌畅****/
-        List<UserConfig> userConfigs = LitePal.where("userId = ?", ConfigData.getUserNumLogged() + "").find(UserConfig.class);
+        List<UserConfig> userConfigs = LitePal.where("userId = ?", 0 + "").find(UserConfig.class);
         userConfigs.get(0);
         WordController.generateDailyLearnWords(userConfigs.get(0).getLastStartTime());
         WordController.generateDailyReviewWords();

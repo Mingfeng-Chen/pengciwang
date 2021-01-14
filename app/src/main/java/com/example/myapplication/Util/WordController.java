@@ -17,6 +17,8 @@ import java.util.List;
 public class WordController {
     // 今天复习总共的单词量
     public static int wordReviewNum;
+    // 今天学习总共的单词量
+    public static int wordLearnNum;
 
     // 当前ID
     public static int currentWordId;
@@ -48,7 +50,7 @@ public class WordController {
         List<Word> wordNoNeedLearnList = LitePal.where("isNeedLearned = ? and isLearned = ?", "0", "0").select("wordId").find(Word.class);
         // 得到每天需要的学习量
         int needWordTotal = userConfigs.get(0).getWordNeedReciteNum();
-
+        wordLearnNum = needWordTotal;
         // 说明再点击按钮的时候已经是新的一天了，这时候就要重新分配单词了
         if (!TimeController.isTheSameDay(lastStartTime, TimeController.getCurrentTimeStamp())) {
             Log.d(TAG, "a new day");
@@ -179,13 +181,13 @@ public class WordController {
      * @param wordId
      */
     public static void reviewNewWordDone(int wordId) {
-            // 移除对应单词
-            for (int i = 0; i < justLearnedWords.size(); ++i) {
-                if (justLearnedWords.get(i) == wordId) {
-                    justLearnedWords.remove(i);
-                    break;
-                }
+        // 移除对应单词
+        for (int i = 0; i < justLearnedWords.size(); ++i) {
+            if (justLearnedWords.get(i) == wordId) {
+                justLearnedWords.remove(i);
+                break;
             }
+        }
     }
 
     /**
@@ -224,8 +226,11 @@ public class WordController {
         // 得到该单词的释义
         List<Interpretation> interpretations = LitePal.where("wordId = ?", wordId + "").find(Interpretation.class);
         StringBuilder meaning = new StringBuilder();
-        if (!interpretations.isEmpty()) {
-            meaning.append(interpretations.get(0).toString());
+        for(Interpretation i : interpretations){
+            if (!interpretations.isEmpty()) {
+                meaning.append(i.toString()+" ");
+            }
+
         }
         return meaning.toString();
     }

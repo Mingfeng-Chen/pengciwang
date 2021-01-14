@@ -25,6 +25,7 @@ import androidx.fragment.app.Fragment;
 import com.example.myapplication.AddFolderActivity;
 import com.example.myapplication.HomeActivity;
 import com.example.myapplication.LoadWordActivity;
+import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.SearchActivity;
 import com.example.myapplication.Util.NumberController;
@@ -101,7 +102,13 @@ public class FragmentWord extends Fragment implements View.OnClickListener {
         textWordNum = getActivity().findViewById(R.id.text_main_show_word_num);
         textBook = getActivity().findViewById(R.id.text_main_show_book_name);
         textStart = getActivity().findViewById(R.id.text_main_start);
-        textStart.setOnClickListener(this);
+        textStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(), LoadWordActivity.class);
+                startActivity(intent);
+            }
+        });
         layoutFiles = getActivity().findViewById(R.id.layout_main_words);
         layoutFiles.setOnClickListener(this);
         textDate = getActivity().findViewById(R.id.text_main_date);

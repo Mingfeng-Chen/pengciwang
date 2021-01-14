@@ -14,6 +14,9 @@ import android.widget.Toast;
 
 import com.example.myapplication.Util.DBOpenHelper;
 import com.example.myapplication.LoadWordActivity;
+import com.example.myapplication.Util.FileUtil;
+import com.example.myapplication.Util.JsonHelper;
+import com.example.myapplication.dao.Constant;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -51,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
         mTvForget = findViewById(R.id.tv_1);
         mTvFace = findViewById(R.id.tv_2);
         mDBOpenHelper=new DBOpenHelper(this);
+        //TODO 读Json放入数据库，测试，实际应当放在其他的Activity中
+        FileUtil.saveLocalJson2Data(Constant.CET4_BOOK_1);
+        JsonHelper.analyseDefaultAndSave(FileUtil.readLocalJson(Constant.CET4_BOOK_1));
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -174,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
         mTvFace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this, LoadWordActivity.class);
+                Intent intent=new Intent(MainActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
         });
