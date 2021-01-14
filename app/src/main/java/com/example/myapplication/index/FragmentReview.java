@@ -124,13 +124,6 @@ public class FragmentReview extends Fragment implements View.OnClickListener {
         layoutPhoto = getActivity().findViewById(R.id.layout_re_photo);
         //layoutPhoto.setOnClickListener(this);
         layoutSpeed = getActivity().findViewById(R.id.layout_re_speed);
-        layoutSpeed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getContext(), ChooseWrongWordsActivity.class);//改为限时模式
-                startActivity(intent);
-            }
-        });
         layoutMatch = getActivity().findViewById(R.id.layout_re_match);
         layoutMatch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,63 +150,13 @@ public class FragmentReview extends Fragment implements View.OnClickListener {
         //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         switch (v.getId()) {
             case R.id.layout_re_speed:
-                /*showProgressDialog("数据准备中...");
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        prepareData(ConfigData.getSpeedNum());
-                        Message message = new Message();
-                        message.what = LOAD_SPEED;
-                        handler.sendMessage(message);
-                    }
-                }).start();*/
                 break;
             case R.id.layout_re_match:
-                /*showProgressDialog("数据准备中...");
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        loadMatchData();
-                        Message message = new Message();
-                        message.what = LOAD_DONE;
-                        handler.sendMessage(message);
-                    }
-                }).start();*/
                 break;
             case R.id.layout_re_game:
                 intent.setClass(MyApplication.getContext(), ChooseWrongWordsActivity.class);
                 startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
                 break;
-            /*case R.id.layout_re_photo:
-                // 通过builder 构建器来构造
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("请选择方式")
-                        .setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
-
-                            @Override
-                            public void onClick(final DialogInterface dialog, int which) {
-                                final int num = which;
-                                new Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        switch (num) {
-                                            case 0:
-                                                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                                startActivityForResult(intent, REQUEST_CODE_TAKE_PICTURE);
-                                                break;
-                                            case 1:
-                                                Intent intent2 = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                                                startActivityForResult(intent2, IMAGE_REQUEST_CODE);
-                                                break;
-                                        }
-                                        dialog.dismiss();
-                                    }
-                                }, 200);
-
-                            }
-                        })
-                        .show();
-                break;*/
         }
 
     }
@@ -226,174 +169,5 @@ public class FragmentReview extends Fragment implements View.OnClickListener {
         progressDialog.show();
     }
 
-    /*@Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            final Intent intent = data;
-            switch (requestCode) {
-                case REQUEST_CODE_TAKE_PICTURE:
-                    // 解析返回的图片成bitmap
-                    if (data.getExtras() != null) {
-                        showProgressDialog("正在识别分析中");
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Bitmap bmp = (Bitmap) intent.getExtras().get("data");
-                                BaiduHelper.analysePicture(Base64Util.encode(FileUtil.bitmapCompress(bmp, 3999)), new CallBackListener() {
-
-                                    @Override
-                                    public void onFailure(Call call, IOException e) {
-                                        Message message = new Message();
-                                        message.what = WRONG;
-                                        handler.sendMessage(message);
-                                    }
-
-                                    @Override
-                                    public void onResponse(Call call, Response response) throws IOException {
-                                        String s = response.body().string();
-                                        Log.d(TAG, s);
-                                        Gson gson = new Gson();
-                                        try {
-                                            analyseJson(s, gson);
-                                            Message message = new Message();
-                                            message.what = FINISH;
-                                            handler.sendMessage(message);
-                                        } catch (Exception e) {
-                                            Message message = new Message();
-                                            message.what = WRONG;
-                                            handler.sendMessage(message);
-                                        }
-                                    }
-                                });
-
-                            }
-                        }).start();
-                    }
-                    break;
-                case IMAGE_REQUEST_CODE:
-                    showProgressDialog("正在识别分析中");
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Uri selectedImage = intent.getData(); //获取系统返回的照片的Uri
-                            String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                            Cursor cursor = MyApplication.getContext().getContentResolver().query(selectedImage,
-                                    filePathColumn, null, null, null);//从系统表中查询指定Uri对应的照片
-                            cursor.moveToFirst();
-                            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                            String path = cursor.getString(columnIndex);  //获取照片路径
-                            cursor.close();
-                            Bitmap bitmap = BitmapFactory.decodeFile(path);
-                            BaiduHelper.analysePicture(Base64Util.encode(FileUtil.bitmapCompress(bitmap, 2000)), new CallBackListener() {
-
-                                @Override
-                                public void onFailure(Call call, IOException e) {
-                                    Message message = new Message();
-                                    message.what = WRONG;
-                                    handler.sendMessage(message);
-                                }
-
-                                @Override
-                                public void onResponse(Call call, Response response) throws IOException {
-                                    String s = response.body().string();
-                                    Log.d(TAG, s);
-                                    Gson gson = new Gson();
-                                    try {
-                                        analyseJson(s, gson);
-                                        Message message = new Message();
-                                        message.what = FINISH;
-                                        handler.sendMessage(message);
-                                    } catch (Exception e) {
-                                        Message message = new Message();
-                                        message.what = WRONG;
-                                        handler.sendMessage(message);
-                                    }
-                                }
-
-                            });
-
-                        }
-                    }).start();
-                    break;
-            }
-        } else {
-            // 取消了
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    private void analyseJson(String s, Gson gson) {
-        JsonBaidu jsonBaidu = gson.fromJson(s.toLowerCase(), JsonBaidu.class);
-        if (jsonBaidu != null) {
-            List<JsonBaiduWords> jsonBaiduWordsResult = jsonBaidu.getWords_result();
-            StringBuilder stringBuilder = new StringBuilder();
-            for (JsonBaiduWords jsonBaiduWords : jsonBaiduWordsResult) {
-                stringBuilder.append(jsonBaiduWords.getWords() + " ");
-            }
-            Log.d(TAG, stringBuilder.toString());
-            String[] result = stringBuilder.toString().split(" ");
-            Log.d(TAG, Arrays.toString(result));
-            if (result.length >= 1) {
-                WordController.needLearnWords.clear();
-                HashMap<Integer, Integer> map = new HashMap<>();
-                for (int i = 0; i < result.length; ++i) {
-                    Log.d(TAG, i + result[i]);
-                    List<Word> words = LitePal.where("word = ?", result[i]).select("wordId", "word").find(Word.class);
-                    if (!words.isEmpty()) {
-                        Log.d(TAG, i + "我找到了" + words.get(0).getWord());
-                        if (!map.containsValue(words.get(0).getWordId())) {
-                            map.put(i, words.get(0).getWordId());
-                            Log.d(TAG, "我已添加" + words.get(0).getWord());
-                        }
-                    }
-                }
-                for (int ii : map.keySet()) {
-                    WordController.needLearnWords.add(map.get(ii));
-                }
-                Log.d(TAG, "长度：" + WordController.needLearnWords.size());
-            }
-        }
-    }
-
-    private void loadMatchData() {
-        MatchActivity.allMatches.clear();
-        if (!MatchActivity.wordList.isEmpty())
-            MatchActivity.wordList.clear();
-        if (!MatchActivity.matchList.isEmpty())
-            MatchActivity.matchList.clear();
-        List<Word> words = LitePal.select("wordId", "word").find(Word.class);
-        int[] randomId = NumberController.getRandomNumberList(0, words.size() - 1, ConfigData.getMatchNum());
-        for (int i = 0; i < randomId.length; ++i) {
-            MatchActivity.matchList.add(new ItemMatch(randomId[i], words.get(randomId[i]).getWord(), false, false));
-            MatchActivity.allMatches.add(new ItemMatch(words.get(randomId[i]).getWordId(), words.get(randomId[i]).getWord(), false, false));
-            Log.d(TAG, "单词：" + words.get(randomId[i]).getWord());
-            List<Interpretation> interpretations = LitePal.where("wordId = ?", words.get(randomId[i]).getWordId() + "").find(Interpretation.class);
-            Log.d(TAG, "size: " + interpretations.size());
-            StringBuilder stringBuilder = new StringBuilder();
-            for (int ii = 0; ii < interpretations.size(); ++ii) {
-                if (ii != (interpretations.size() - 1))
-                    stringBuilder.append(interpretations.get(ii).getWordType() + ". " + interpretations.get(ii).getCHSMeaning() + "\n");
-                else
-                    stringBuilder.append(interpretations.get(ii).getWordType() + ". " + interpretations.get(ii).getCHSMeaning());
-            }
-            Log.d(TAG, "意思: " + stringBuilder.toString());
-            MatchActivity.matchList.add(new ItemMatch(randomId[i], stringBuilder.toString(), false, false));
-        }
-        Collections.shuffle(MatchActivity.matchList);
-
-    }
-
-    private void prepareData(int num) {
-        if (!SpeedActivity.wordList.isEmpty())
-            SpeedActivity.wordList.clear();
-        // 准备单词数据
-        List<Word> words = LitePal.select("wordId", "word").find(Word.class);
-        // 随机匹配单词ID
-        int[] randomId = NumberController.getRandomNumberList(0, words.size() - 1, num);
-        for (int i = 0; i < num; ++i) {
-            // 添加数据
-            SpeedActivity.wordList.add(words.get(randomId[i]));
-        }
-    }*/
 
 }

@@ -60,7 +60,7 @@ public class BindActivity extends AppCompatActivity {
                                         "}";
                                 OkHttpClient client=new OkHttpClient();
                                 Request request=new Request.Builder()
-                                        .url(BASE_URL+BIND)
+                                        .url(BIND)
                                         .post(RequestBody.create(MediaType.parse("application/json"),json))
                                         .build();
                                 Response response=client.newCall(request).execute();
@@ -72,7 +72,7 @@ public class BindActivity extends AppCompatActivity {
                                         @Override
                                         public void run() {
                                             Toast.makeText(getApplicationContext(), "绑定成功", Toast.LENGTH_SHORT).show();
-                                            Intent intent=new Intent(BindActivity.this, MainActivity.class);
+                                            Intent intent=new Intent(BindActivity.this, HomeActivity.class);
                                             startActivity(intent);
                                         }
                                     });

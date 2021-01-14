@@ -1,9 +1,9 @@
 package com.example.myapplication.dao;
 
 public class Constant {
-    public final static String BASE_URL = "http://3b5d3d3c.cpolar.io/demo";
+    public final static String BASE_URL = "http://f705ab4.cpolar.io/demo";
     public final static String REGISTER=BASE_URL+"/register";
-    public final static String LOGIN =BASE_URL+"login";
+    public final static String LOGIN =BASE_URL+"/login";
     public final static String BIND=BASE_URL+"/bind";
     // 有道英音发音
     public static final String YOU_DAO_VOICE_EN = "https://dict.youdao.com/dictvoice?type=1&audio=";

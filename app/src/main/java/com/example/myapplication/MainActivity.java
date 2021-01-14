@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                                         "}";
                                 OkHttpClient client=new OkHttpClient();
                                 Request request=new Request.Builder()
-                                        .url(BASE_URL+LOGIN)
+                                        .url(LOGIN)
                                         .post(RequestBody.create(MediaType.parse("application/json"),json))
                                         .build();
                                 Response response=client.newCall(request).execute();
@@ -100,7 +100,12 @@ public class MainActivity extends AppCompatActivity {
                                         }
                                     });
                                 }else {
-                                    Toast.makeText(getApplicationContext(), "登录失败", Toast.LENGTH_SHORT).show();
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(getApplicationContext(), "登录失败", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                                 }
                             } catch (Exception e){
                                 e.printStackTrace();
@@ -130,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
                                         "}";
                                 OkHttpClient client=new OkHttpClient();
                                 Request request=new Request.Builder()
-                                        .url(BASE_URL+REGISTER)
+                                        .url(REGISTER)
                                         .post(RequestBody.create(MediaType.parse("application/json"),json))
                                         .build();
                                 Response response=client.newCall(request).execute();
@@ -148,7 +153,12 @@ public class MainActivity extends AppCompatActivity {
                                         }
                                     });
                                 }else{
-                                    Toast.makeText(getApplicationContext(), "注册失败", Toast.LENGTH_SHORT).show();
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(getApplicationContext(), "注册失败", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                                 }
                             } catch (Exception e){
                                 e.printStackTrace();

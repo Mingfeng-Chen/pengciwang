@@ -79,7 +79,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
-                                android:text="及时复习"
+                                android:text="敬请期待"
                                 android:textColor="@color/colorGrey"
                                 android:textSize="10sp" />
 
@@ -135,7 +135,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
-                                    android:text="随身听"
+                                    android:text="即将上线"
                                     android:textColor="@color/colorGrey"
                                     android:textSize="10sp" />
 
