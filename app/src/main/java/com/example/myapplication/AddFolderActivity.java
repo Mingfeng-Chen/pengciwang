@@ -17,7 +17,7 @@ import org.litepal.LitePal;
 
 import java.util.Random;
 
-public class AddFolderActivity extends Activity {
+public class AddFolderActivity extends BaseActivity {
 
     private EditText editName, editRemark;
 
@@ -53,6 +53,13 @@ public class AddFolderActivity extends Activity {
         editName = findViewById(R.id.edit_af_name);
         editRemark = findViewById(R.id.edit_af_remark);
         layoutAdd = findViewById(R.id.layout_af_add);
+    }
+    public void modeDay(View v) {
+        setEnableNightMode(false);
+    }
+
+    public void modeNight(View v) {
+        setEnableNightMode(true);
     }
 
 }

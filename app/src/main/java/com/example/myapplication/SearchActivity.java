@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class SearchActivity extends Activity {
+public class SearchActivity extends BaseActivity {
 
     private RecyclerView recyclerSearch;
 
@@ -138,4 +138,11 @@ public class SearchActivity extends Activity {
     public void onBackPressed() {
         supportFinishAfterTransition();
     }*/
+    public void modeDay(View v) {
+        setEnableNightMode(false);
+    }
+
+    public void modeNight(View v) {
+        setEnableNightMode(true);
+    }
 }

@@ -44,7 +44,7 @@ public class WrongWordsListActivity extends AppCompatActivity {
             @Override
             public void onDeleteClick(int i) {
                 words.remove(i);
-                Toast.makeText(WrongWordsListActivity.this, "delete item:" + i, Toast.LENGTH_SHORT).show();
+                Toast.makeText(WrongWordsListActivity.this, "删除成功", Toast.LENGTH_SHORT).show();
                 adapter.notifyDataSetChanged();
             }
         });

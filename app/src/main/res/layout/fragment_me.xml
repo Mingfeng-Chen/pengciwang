@@ -232,51 +232,7 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/layout_me_analyse"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
 
-                        <ImageView
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:src="@drawable/icon_data" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="数据分析"
-                            android:textColor="@color/colorFontInWhite"
-                            android:textSize="10sp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/layout_me_calendar"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:src="@drawable/icon_calendar" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="打卡日历"
-                            android:textColor="@color/colorFontInWhite"
-                            android:textSize="10sp" />
-
-                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/layout_me_word_list"
@@ -295,7 +251,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:text="单词列表"
+                            android:text="敬请期待"
                             android:textColor="@color/colorFontInWhite"
                             android:textSize="10sp" />
 

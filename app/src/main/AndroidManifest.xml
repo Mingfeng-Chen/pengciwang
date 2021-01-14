@@ -39,6 +39,7 @@
         <activity android:name=".NormalReciteActivity"/>
         <activity android:name=".PlanActivity"/>
         <activity android:name=".SearchActivity"/>
+        <activity android:name=".ReportActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

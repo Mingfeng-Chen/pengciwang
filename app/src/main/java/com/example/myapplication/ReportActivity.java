@@ -40,8 +40,8 @@ public class ReportActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                //TODO 回到主页
-                finish();
+                Intent intent=new Intent(ReportActivity.this,HomeActivity.class);
+                startActivity(intent);
             }
         });
     }

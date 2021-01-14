@@ -78,15 +78,6 @@ public class HomeActivity extends BaseActivity {
             userConfig.save();
             Log.d("userconfig","新建");
         }
-        if (needRefresh) {
-
-            TranslateAnimation animation = new TranslateAnimation(
-                    Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f,
-                    Animation.RELATIVE_TO_PARENT, 1.0f, Animation.RELATIVE_TO_PARENT, 0.0f
-            );
-            animation.setDuration(2000);
-            //bottomNavigationView.startAnimation(animation);
-        }
 
         initFragment();
 

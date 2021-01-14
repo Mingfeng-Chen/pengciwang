@@ -92,7 +92,7 @@ public class FragmentWord extends Fragment implements View.OnClickListener {
     // 初始化控件
     private void init() {
         imgRefresh = getActivity().findViewById(R.id.img_refresh);
-        imgRefresh.setOnClickListener(this);
+        //imgRefresh.setOnClickListener(this);
         cardStart = getActivity().findViewById(R.id.card_index_start);
         cardStart.setOnClickListener(this);
         tranView = getActivity().findViewById(R.id.view_main_tran);
@@ -130,30 +130,6 @@ public class FragmentWord extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.img_refresh:
-                // 旋转动画
-                RotateAnimation animation = new RotateAnimation(0.0f, 360.0f,
-                        Animation.RELATIVE_TO_SELF, 0.5f,
-                        Animation.RELATIVE_TO_SELF, 0.5f);
-                animation.setDuration(700);
-                animation.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        setRandomWord();
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-
-                    }
-                });
-                imgRefresh.startAnimation(animation);
-                break;
             case R.id.text_main_start:
                 if (isOnClick) {
                     Intent mIntent = new Intent(getActivity(), LoadWordActivity.class);
@@ -161,19 +137,6 @@ public class FragmentWord extends Fragment implements View.OnClickListener {
                     startActivity(mIntent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
                     isOnClick = false;
                 }
-                break;
-            case R.id.img_top_flag:
-                /*Intent mIntent = new Intent(getActivity(), DaySentenceActivity.class);
-                mIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
-                        tranView, "mainTrans");
-                startActivity(mIntent, activityOptionsCompat.toBundle());*/
-                break;
-            case R.id.text_main_show_word_mean:
-                /*WordDetailActivity.wordId = currentRandomId;
-                Intent intent = new Intent(getActivity(), WordDetailActivity.class);
-                intent.putExtra(WordDetailActivity.TYPE_NAME, WordDetailActivity.TYPE_GENERAL);
-                startActivity(intent);*/
                 break;
             case R.id.card_main_search:
                 Intent intent2 = new Intent(getActivity(), SearchActivity.class);
@@ -220,55 +183,6 @@ public class FragmentWord extends Fragment implements View.OnClickListener {
     public void onStart() {
         super.onStart();
         Log.d(TAG, "onStart: ");
-        /*Calendar calendar = Calendar.getInstance();
-        textDate.setText(calendar.get(Calendar.DATE) + "");
-        textMonth.setText(DaySentenceActivity.getMonthName(calendar));
-        LitePal.initialize(getContext());
-        List<Word> words = LitePal.where("deepMasterTimes <> ?", 3 + "").select("wordId").find(Word.class);
-        List<MyDate> myDates = LitePal.where("year = ? and month = ? and date = ? and userId = ?",
-                calendar.get(Calendar.YEAR) + "",
-                (calendar.get(Calendar.MONTH) + 1) + "",
-                calendar.get(Calendar.DATE) + "",
-                ConfigData.getSinaNumLogged() + "").find(MyDate.class);
-        if (!words.isEmpty()) {
-            if (myDates.isEmpty()) {
-                // 未完成计划
-                cardStart.setCardBackgroundColor(getActivity().getColor(R.color.colorLightBlue));
-                textStart.setTextColor(getActivity().getColor(R.color.colorFontInBlue));
-                textStart.setText("开始背单词");
-                isOnClick = true;
-            } else {
-                // 完成计划
-                if ((myDates.get(0).getWordLearnNumber() + myDates.get(0).getWordReviewNumber()) > 0) {
-                    cardStart.setCardBackgroundColor(getActivity().getColor(R.color.colorBgWhite));
-                    textStart.setTextColor(getActivity().getColor(R.color.colorFontInWhite));
-                    textStart.setText("已完成今日任务");
-                    cardStart.setClickable(false);
-                    isOnClick = false;
-                } else {
-                    // 未完成计划
-                    cardStart.setCardBackgroundColor(getActivity().getColor(R.color.colorLightBlue));
-                    textStart.setTextColor(getActivity().getColor(R.color.colorFontInBlue));
-                    textStart.setText("开始背单词");
-                    isOnClick = true;
-                }
-            }
-        } else {
-            cardStart.setCardBackgroundColor(getActivity().getColor(R.color.colorBgWhite));
-            textStart.setTextColor(getActivity().getColor(R.color.colorFontInWhite));
-            textStart.setText("恭喜！已背完此书");
-            cardStart.setClickable(false);
-            isOnClick = false;
-        }
-        // 设置界面数据
-        //List<UserConfig> userConfigs = LitePal.where("userId = ?", ConfigData.getSinaNumLogged() + "").find(UserConfig.class);
-        //currentBookId = userConfigs.get(0).getCurrentBookId();
-        currentBookId=1;*/
-        /*textWordNum.setText("每日须学" + userConfigs.get(0).getWordNeedReciteNum() + "个单词");
-        textBook.setText(ConstantData.bookNameById(currentBookId));
-        if (prepareData == 0)
-            // 设置随机数据
-            setRandomWord();*/
     }
 
 }

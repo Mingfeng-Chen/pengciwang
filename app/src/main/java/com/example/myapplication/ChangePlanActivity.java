@@ -38,7 +38,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class ChangePlanActivity extends Activity {
+public class ChangePlanActivity extends BaseActivity {
 
     private EditText editText;
 
@@ -88,13 +88,6 @@ public class ChangePlanActivity extends Activity {
                 if(editText.getText().toString().equals("")){
                     Toast.makeText(getApplicationContext(),"输入不能为空",Toast.LENGTH_SHORT).show();
                 }else {
-                    /*InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-                    /*progressDialog = new ProgressDialog(ChangePlanActivity.this);
-                    progressDialog.setTitle("请稍等");
-                    progressDialog.setMessage("数据包正在下载中...");
-                    progressDialog.setCancelable(false);
-                    progressDialog.show();*/
                     int wordNum=0;
                     try{
                         wordNum=Integer.parseInt(editText.getText().toString());
@@ -106,7 +99,7 @@ public class ChangePlanActivity extends Activity {
                                 userConfigs.get(0).save();
                             }
                             Toast.makeText(getApplicationContext(),"修改成功",Toast.LENGTH_SHORT).show();
-                            Intent intent=new Intent(ChangePlanActivity.this, MainActivity.class);
+                            Intent intent=new Intent(ChangePlanActivity.this, HomeActivity.class);
                             startActivity(intent);
                         }else {
                             Toast.makeText(getApplicationContext(),"输入范围错误",Toast.LENGTH_SHORT).show();
@@ -114,38 +107,6 @@ public class ChangePlanActivity extends Activity {
                     }catch (Exception e){
                         Toast.makeText(getApplicationContext(),"请输入数字",Toast.LENGTH_SHORT).show();
                     }
-                    // 延迟两秒再运行，防止等待框不显示
-                    /*new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            // 开启线程分析数据
-                            thread = new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    try {
-                                        OkHttpClient client = new OkHttpClient();
-                                        Request request = new Request.Builder()
-                                                .url(ConstantData.bookDownLoadAddressById(currentBookId))
-                                                .build();
-                                        Response response = client.newCall(request).execute();
-                                        Message message = new Message();
-                                        message.what = DOWN_DONE;
-                                        handler.sendMessage(message);
-                                        FileUtil.getFileByBytes(response.body().bytes(), "/Android/data/com.example.myapplication/files"+ "/" + ConstantData.DIR_TOTAL, ConstantData.bookFileNameById(currentBookId));
-                                        FileUtil.unZipFile("/Android/data/com.example.myapplication/files"+ "/" + ConstantData.DIR_TOTAL + "/" + ConstantData.bookFileNameById(currentBookId)
-                                                , getFilesDir() + "/" + ConstantData.DIR_TOTAL + "/" + ConstantData.DIR_AFTER_FINISH, false);
-                                    } catch (Exception e) {
-
-                                    }
-                                    JsonHelper.analyseDefaultAndSave(FileUtil.readLocalJson(ConstantData.DIR_TOTAL + "/" + ConstantData.DIR_AFTER_FINISH + "/" + ConstantData.bookFileNameById(currentBookId).replace(".zip", ".json")));
-                                    Message message = new Message();
-                                    message.what = FINISH;
-                                    handler.sendMessage(message);
-                                }
-                            });
-                            thread.start();
-                        }
-                    }, 500);*/
                 }
             }
         });
@@ -161,9 +122,6 @@ public class ChangePlanActivity extends Activity {
     protected void onStart() {
         super.onStart();
         Log.d(TAG, "onStart: ");
-        // 获得数据
-        //List<UserConfig> userConfigs = LitePal.where("userId = ?", ConfigData.getSinaNumLogged() + "").find(UserConfig.class);
-        //currentBookId = userConfigs.get(0).getCurrentBookId();
 
         maxNum = ConstantData.wordTotalNumberById(currentBookId);
 
@@ -173,5 +131,12 @@ public class ChangePlanActivity extends Activity {
         // 设置书名
         textBook.setText(ConstantData.bookNameById(currentBookId));
 
+    }
+    public void modeDay(View v) {
+        setEnableNightMode(false);
+    }
+
+    public void modeNight(View v) {
+        setEnableNightMode(true);
     }
 }

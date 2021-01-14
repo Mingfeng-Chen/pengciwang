@@ -316,4 +316,11 @@ public class NormalReciteActivity extends BaseActivity implements View.OnClickLi
         hintTV.setText("");
         hintTV.setBackground(getResources().getDrawable(R.color.colorBackground));
     }
+    public void modeDay(View v) {
+        setEnableNightMode(false);
+    }
+
+    public void modeNight(View v) {
+        setEnableNightMode(true);
+    }
 }

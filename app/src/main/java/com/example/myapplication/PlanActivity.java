@@ -27,7 +27,7 @@ import org.litepal.LitePal;
 
 import java.util.List;
 
-public class PlanActivity extends Activity {
+public class PlanActivity extends BaseActivity {
 
     private TextView textBookName, textNum, textDaily, textExpect, textInformation;
 

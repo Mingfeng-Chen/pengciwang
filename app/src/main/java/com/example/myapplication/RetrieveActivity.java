@@ -13,10 +13,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.Util.DBOpenHelper;
+import com.example.myapplication.Util.User;
 import com.example.myapplication.Util.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 /**
@@ -29,6 +33,7 @@ public class RetrieveActivity extends AppCompatActivity {
     private String phoneNum,code;
     private EventHandler eh;
     private TextView textView;
+    private DBOpenHelper dbOpenHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +43,7 @@ public class RetrieveActivity extends AppCompatActivity {
         editTextCode = findViewById(R.id.editTextCode);
         editTextPhoneNum = findViewById(R.id.editTextPhoneNum);
         textView=findViewById(R.id.tv_1);
+        dbOpenHelper=new DBOpenHelper(this);
         eh = new EventHandler() {
             @Override
             public void afterEvent(int event, int result, Object data) {
@@ -120,7 +126,9 @@ public class RetrieveActivity extends AppCompatActivity {
                 if(!code.isEmpty()){
                     //提交验证码
                     SMSSDK.submitVerificationCode("86", phoneNum, code);
-                    textView.append("1234");
+                    phoneNum = editTextPhoneNum.getText().toString();
+                    String password=dbOpenHelper.query(phoneNum);
+                    textView.append(password);
                 }else{
                     Toast.makeText(getApplicationContext(),"请输入验证码",Toast.LENGTH_LONG).show();
                     return;
