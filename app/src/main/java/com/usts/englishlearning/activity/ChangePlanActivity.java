@@ -36,6 +36,7 @@ import com.usts.englishlearning.util.TimeController;
 
 import org.litepal.LitePal;
 
+import java.io.IOException;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -98,10 +99,24 @@ public class ChangePlanActivity extends Activity {
                     progressDialog.setMessage("数据包正在下载中...");
                     progressDialog.setCancelable(false);
                     progressDialog.show();*/
-                    /*LitePal.initialize(getApplicationContext());
-                    List<UserConfig> userConfigs = LitePal.where("userId = ?", 0 + "").find(UserConfig.class);
-                    if(!userConfigs.isEmpty()){
-                        userConfigs.get(0).setWordNeedReciteNum(Integer.parseInt(editText.getText().toString()));
+                    int wordNum=0;
+                    try{
+                        wordNum=Integer.parseInt(editText.getText().toString());
+                        if(wordNum>=5&&wordNum<=1162){
+                            LitePal.initialize(getApplicationContext());
+                            List<UserConfig> userConfigs = LitePal.where("userId = ?", 0 + "").find(UserConfig.class);
+                            if(!userConfigs.isEmpty()){
+                                userConfigs.get(0).setWordNeedReciteNum(wordNum);
+                                userConfigs.get(0).save();
+                            }
+                            Toast.makeText(getApplicationContext(),"修改成功",Toast.LENGTH_SHORT).show();
+                            Intent intent=new Intent(ChangePlanActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        }else {
+                            Toast.makeText(getApplicationContext(),"输入范围错误",Toast.LENGTH_SHORT).show();
+                        }
+                    }catch (Exception e){
+                        Toast.makeText(getApplicationContext(),"请输入数字",Toast.LENGTH_SHORT).show();
                     }
                     // 延迟两秒再运行，防止等待框不显示
                     /*new Handler().postDelayed(new Runnable() {
@@ -135,9 +150,6 @@ public class ChangePlanActivity extends Activity {
                             thread.start();
                         }
                     }, 500);*/
-                    Toast.makeText(getApplicationContext(),"修改成功",Toast.LENGTH_SHORT).show();
-                    Intent intent=new Intent(ChangePlanActivity.this, MainActivity.class);
-                    startActivity(intent);
                 }
             }
         });

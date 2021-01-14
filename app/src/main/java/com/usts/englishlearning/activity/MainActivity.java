@@ -68,11 +68,16 @@ public class MainActivity extends BaseActivity {
             user.setUserMoney(0);
             user.setUserWordNumber(0);
             user.save();
-            UserConfig userConfig = new UserConfig();
+            Log.d("user","新建");
+        }
+        List<UserConfig> userConfigs=LitePal.where("userId=?",0+"").find(UserConfig.class);
+        if(userConfigs.isEmpty()){
+            UserConfig userConfig=new UserConfig();
             userConfig.setUserId(0);
             userConfig.setCurrentBookId(1);
             userConfig.setWordNeedReciteNum(5);
             userConfig.save();
+            Log.d("userconfig","新建");
         }
         if (needRefresh) {
 

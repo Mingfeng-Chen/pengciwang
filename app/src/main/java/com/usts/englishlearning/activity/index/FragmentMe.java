@@ -16,12 +16,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
+import com.example.myapplication.Util.DBOpenHelper;
+import com.example.myapplication.Util.User;
 import com.usts.englishlearning.activity.AboutActivity;
 import com.usts.englishlearning.activity.AlarmActivity;
 import com.usts.englishlearning.activity.CalendarActivity;
 import com.usts.englishlearning.activity.ChartActivity;
 import com.usts.englishlearning.activity.ListActivity;
 import com.usts.englishlearning.activity.PlanActivity;
+
+import java.util.ArrayList;
 
 public class FragmentMe extends Fragment implements View.OnClickListener {
 
@@ -36,6 +40,7 @@ public class FragmentMe extends Fragment implements View.OnClickListener {
     private Switch aSwitchNight;
     private boolean isNight;
     private static final String TAG = "FragmentMe";
+    private DBOpenHelper dbOpenHelper;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -58,8 +63,12 @@ public class FragmentMe extends Fragment implements View.OnClickListener {
             aSwitchNight.setChecked(false);
         // 设置头像和用户名信息
         /*LitePal.initialize(getContext());
-        List<User> userList = LitePal.where("userId = ?", ConfigData.getSinaNumLogged() + "").find(User.class);
-        textName.setText(userList.get(0).getUserName());*/
+        List<User> userList = LitePal.where("userId = ?", ConfigData.getSinaNumLogged() + "").find(User.class);*/
+        dbOpenHelper=new DBOpenHelper(getContext());
+        ArrayList<User> data =dbOpenHelper.getAllData();
+        int size=data.size();
+        User user=data.get(size-1);
+        textName.setText(user.getName());
 
         /*aSwitchNight.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -144,14 +153,14 @@ public class FragmentMe extends Fragment implements View.OnClickListener {
 
     private void init() {
         layoutCalendar = getActivity().findViewById(R.id.layout_me_calendar);
-        layoutCalendar.setOnClickListener(this);
+        //layoutCalendar.setOnClickListener(this);
         layoutWordList = getActivity().findViewById(R.id.layout_me_word_list);
         layoutWordList.setOnClickListener(this);
         textDays = getActivity().findViewById(R.id.text_me_days);
         textWordNum = getActivity().findViewById(R.id.text_me_words);
         textMoney = getActivity().findViewById(R.id.text_me_money);
         layoutData = getActivity().findViewById(R.id.layout_me_analyse);
-        layoutData.setOnClickListener(this);
+        //layoutData.setOnClickListener(this);
         layoutPlan = getActivity().findViewById(R.id.layout_me_plan);
         layoutPlan.setOnClickListener(this);
         //aSwitchNight = getActivity().findViewById(R.id.switch_night);
@@ -161,7 +170,7 @@ public class FragmentMe extends Fragment implements View.OnClickListener {
         //layoutNotify.setOnClickListener(this);
         layoutMoney = getActivity().findViewById(R.id.layout_me_money);
         layoutAbout = getActivity().findViewById(R.id.layout_me_about);
-        layoutAbout.setOnClickListener(this);
+        //layoutAbout.setOnClickListener(this);
         //layoutSyno = getActivity().findViewById(R.id.layout_me_syno);
         //layoutSyno.setOnClickListener(this);
         textName = getActivity().findViewById(R.id.text_me_name);
@@ -171,7 +180,7 @@ public class FragmentMe extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         Intent intent = new Intent();
         switch (v.getId()) {
-            case R.id.layout_me_calendar:
+            /*case R.id.layout_me_calendar:
                 intent.setClass(getActivity(), CalendarActivity.class);
                 break;
             case R.id.layout_me_word_list:
@@ -179,16 +188,16 @@ public class FragmentMe extends Fragment implements View.OnClickListener {
                 break;
             case R.id.layout_me_analyse:
                 intent.setClass(getActivity(), ChartActivity.class);
-                break;
+                break;*/
             case R.id.layout_me_plan:
                 intent.setClass(getActivity(), PlanActivity.class);
                 break;
             case R.id.layout_me_alarm:
                 intent.setClass(getActivity(), AlarmActivity.class);
                 break;
-            case R.id.layout_me_about:
+            /*case R.id.layout_me_about:
                 intent.setClass(getActivity(), AboutActivity.class);
-                break;
+                break;*/
         }
         startActivity(intent);
     }

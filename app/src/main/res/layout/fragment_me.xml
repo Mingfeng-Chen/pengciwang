@@ -454,7 +454,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="本软件的一些小说明"
+                                android:text="版本1.0"
                                 android:textColor="@color/colorLightGrey"
                                 android:textSize="10sp" />
 

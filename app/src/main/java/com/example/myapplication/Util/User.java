@@ -3,6 +3,7 @@ package com.example.myapplication.Util;
  *
  */
 public class User {
+    private long id;                //用户ID
     private String name;            //用户名
     private String password;        //密码
     private String telephone;       //手机号
@@ -15,6 +16,14 @@ public class User {
         this.password = password;
         this.telephone =telephone;
     }
+    public User(long id, String name, String password, String telephone){
+        this.id = id;
+        this.name = name;
+        this.password = name;
+        this.telephone = name;
+    }
+    public long getId() {return id; }
+    public void setId(long id){ this.id = id;}
     public String getName() {
         return name;
     }

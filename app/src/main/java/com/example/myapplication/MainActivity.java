@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.JsonReader;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -12,6 +13,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.Util.DBOpenHelper;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
+import org.json.JSONObject;
+import org.json.JSONStringer;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -64,16 +70,25 @@ public class MainActivity extends AppCompatActivity {
                                         "}";
                                 OkHttpClient client=new OkHttpClient();
                                 Request request=new Request.Builder()
-                                        .url("http://7c0b3e95.cpolar.io/demo/login")
+                                        .url("http://3b5d3d3c.cpolar.io/demo/login")
                                         .post(RequestBody.create(MediaType.parse("application/json"),json))
                                         .build();
                                 Response response=client.newCall(request).execute();
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                                String responseData=response.body().string();
+                                JSONObject jsonObject=new JSONObject(responseData);
+                                int code=jsonObject.getInt("code");
+                                if(code==1){
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
+                                            Intent intent=new Intent(MainActivity.this, com.usts.englishlearning.activity.MainActivity.class);
+                                            startActivity(intent);
+                                        }
+                                    });
+                                }else {
+                                    Toast.makeText(getApplicationContext(), "登录失败", Toast.LENGTH_SHORT).show();
+                                }
                             } catch (Exception e){
                                 e.printStackTrace();
                             }
@@ -120,19 +135,26 @@ public class MainActivity extends AppCompatActivity {
                                         "}";
                                 OkHttpClient client=new OkHttpClient();
                                 Request request=new Request.Builder()
-                                        .url("http://7c0b3e95.cpolar.io/demo/register")
+                                        .url("http://3b5d3d3c.cpolar.io/demo/register")
                                         .post(RequestBody.create(MediaType.parse("application/json"),json))
                                         .build();
                                 Response response=client.newCall(request).execute();
-                                mDBOpenHelper.add(username,password);
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(getApplicationContext(), "注册成功", Toast.LENGTH_SHORT).show();
-                                        Intent intent=new Intent(MainActivity.this, BindActivity.class);
-                                        startActivity(intent);
-                                    }
-                                });
+                                String responseData=response.body().string();
+                                JSONObject jsonObject=new JSONObject(responseData);
+                                int code=jsonObject.getInt("code");
+                                if(code==1){
+                                    mDBOpenHelper.add(username,password);
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(getApplicationContext(), "注册成功", Toast.LENGTH_SHORT).show();
+                                            Intent intent=new Intent(MainActivity.this, BindActivity.class);
+                                            startActivity(intent);
+                                        }
+                                    });
+                                }else{
+                                    Toast.makeText(getApplicationContext(), "注册失败", Toast.LENGTH_SHORT).show();
+                                }
                             } catch (Exception e){
                                 e.printStackTrace();
                             }

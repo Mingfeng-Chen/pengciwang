@@ -49,7 +49,7 @@ public class FragmentWord extends Fragment implements View.OnClickListener {
     private CardView cardStart, cardSearch;
     private ImageView imgRefresh, imgSearch, imgFlag;
     private View tranView, tranSearchView;
-    private TextView textStart;
+    private TextView textStart,textView;
     private RelativeLayout layoutFiles;
 
     private TextView textWord, textMean, textWordNum, textBook;
@@ -81,15 +81,15 @@ public class FragmentWord extends Fragment implements View.OnClickListener {
 
         Log.d(TAG, "onActivityCreated: ");
 
-        /*if (MainActivity.needRefresh) {
+        if (MainActivity.needRefresh) {
             prepareData = 0;
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    BaseActivity.prepareDailyData();
+                    //BaseActivity.prepareDailyData();
                 }
             }).start();
-        }*/
+        }
 
     }
 
@@ -117,6 +117,12 @@ public class FragmentWord extends Fragment implements View.OnClickListener {
         imgFlag = getActivity().findViewById(R.id.img_top_flag);
         imgFlag.setOnClickListener(this);
         tranSearchView = getActivity().findViewById(R.id.view_search_tran);
+        textView=getActivity().findViewById(R.id.tv_1);
+        LitePal.initialize(getContext());
+        List<UserConfig> userConfigs=LitePal.where("userId = ?", 0 + "").find(UserConfig.class);
+        if(!userConfigs.isEmpty()){
+            textView.append(String.valueOf(userConfigs.get(0).getWordNeedReciteNum()));
+        }
     }
 
     @Override
@@ -255,8 +261,8 @@ public class FragmentWord extends Fragment implements View.OnClickListener {
         // 设置界面数据
         //List<UserConfig> userConfigs = LitePal.where("userId = ?", ConfigData.getSinaNumLogged() + "").find(UserConfig.class);
         //currentBookId = userConfigs.get(0).getCurrentBookId();
-        currentBookId=1;
-        //textWordNum.setText("每日须学" + userConfigs.get(0).getWordNeedReciteNum() + "个单词");
+        currentBookId=1;*/
+        /*textWordNum.setText("每日须学" + userConfigs.get(0).getWordNeedReciteNum() + "个单词");
         textBook.setText(ConstantData.bookNameById(currentBookId));
         if (prepareData == 0)
             // 设置随机数据

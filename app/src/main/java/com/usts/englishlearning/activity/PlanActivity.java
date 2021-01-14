@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -49,13 +50,14 @@ public class PlanActivity extends Activity {
         int bookId=1;
         int dailyNum=5;
         int wordNum=5500;
-        //LitePal.initialize(this);
-        /*List<UserConfig> userConfigs = LitePal.where("userId = ?", 0 + "").find(UserConfig.class);
+        LitePal.initialize(this);
+        List<UserConfig> userConfigs = LitePal.where("userId = ?", 0 + "").find(UserConfig.class);
         if(!userConfigs.isEmpty()){
             bookId = userConfigs.get(0).getCurrentBookId();
             wordNum = ConstantData.wordTotalNumberById(bookId);
             dailyNum = userConfigs.get(0).getWordNeedReciteNum();
-        }*/
+            Log.d("plan","wordNum"+wordNum);
+        }
 
         Glide.with(this).load(ConstantData.bookPicById(bookId)).into(imgBook);
 

@@ -15,6 +15,8 @@ import com.example.myapplication.Util.Utils;
 import com.usts.englishlearning.activity.MainActivity;
 import com.usts.englishlearning.activity.WelcomeActivity;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,23 +60,30 @@ public class BindActivity extends AppCompatActivity {
                                         "}";
                                 OkHttpClient client=new OkHttpClient();
                                 Request request=new Request.Builder()
-                                        .url("http://7c0b3e95.cpolar.io/demo/bind")
+                                        .url("http://3b5d3d3c.cpolar.io/demo/bind")
                                         .post(RequestBody.create(MediaType.parse("application/json"),json))
                                         .build();
                                 Response response=client.newCall(request).execute();
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(getApplicationContext(), "绑定成功", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                                String responseData=response.body().string();
+                                JSONObject jsonObject=new JSONObject(responseData);
+                                int code=jsonObject.getInt("code");
+                                if(code==1){
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(getApplicationContext(), "绑定成功", Toast.LENGTH_SHORT).show();
+                                            Intent intent=new Intent(BindActivity.this, MainActivity.class);
+                                            startActivity(intent);
+                                        }
+                                    });
+                                }else {
+                                    Toast.makeText(getApplicationContext(), "绑定失败", Toast.LENGTH_SHORT).show();
+                                }
                             } catch (Exception e){
                                 e.printStackTrace();
                             }
                         }
                     }).start();
-                    /*Intent intent=new Intent(BindActivity.this, MainActivity.class);
-                    startActivity(intent);*/
                 }
             }
         });

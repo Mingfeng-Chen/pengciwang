@@ -139,7 +139,7 @@ public class FragmentReview extends Fragment implements View.OnClickListener {
 
     private void init() {
         layoutPhoto = getActivity().findViewById(R.id.layout_re_photo);
-        layoutPhoto.setOnClickListener(this);
+        //layoutPhoto.setOnClickListener(this);
         layoutSpeed = getActivity().findViewById(R.id.layout_re_speed);
         layoutSpeed.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -201,7 +201,7 @@ public class FragmentReview extends Fragment implements View.OnClickListener {
                 intent.setClass(MyApplication.getContext(), ChooseWrongWordsActivity.class);
                 startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
                 break;
-            case R.id.layout_re_photo:
+            /*case R.id.layout_re_photo:
                 // 通过builder 构建器来构造
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle("请选择方式")
@@ -230,7 +230,7 @@ public class FragmentReview extends Fragment implements View.OnClickListener {
                             }
                         })
                         .show();
-                break;
+                break;*/
         }
 
     }

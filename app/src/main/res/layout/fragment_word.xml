@@ -79,10 +79,11 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tv_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="study hard and make progress each day"
+                android:text="今日计划："
                 android:textColor="@color/colorBlack"
                 android:textSize="13sp" />
 
