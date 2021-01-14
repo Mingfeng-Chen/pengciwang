@@ -86,6 +86,8 @@ public class FragmentWord extends Fragment implements View.OnClickListener {
                 }
             }).start();
         }
+        currentBookId=1;
+        setRandomWord();
 
     }
 
