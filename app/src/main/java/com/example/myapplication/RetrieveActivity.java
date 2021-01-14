@@ -127,8 +127,13 @@ public class RetrieveActivity extends AppCompatActivity {
                     //提交验证码
                     SMSSDK.submitVerificationCode("86", phoneNum, code);
                     phoneNum = editTextPhoneNum.getText().toString();
-                    String password=dbOpenHelper.query(phoneNum);
-                    textView.append(password);
+                    int size=dbOpenHelper.getAllData().size();
+                    if(size!=0){
+                        String password=dbOpenHelper.getAllData().get(size-1).getPassword();
+                        textView.append("密码是:"+password);
+                    }else {
+                        textView.append("未找到密码");
+                    }
                 }else{
                     Toast.makeText(getApplicationContext(),"请输入验证码",Toast.LENGTH_LONG).show();
                     return;
