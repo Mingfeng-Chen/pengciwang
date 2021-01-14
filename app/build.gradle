@@ -90,4 +90,9 @@ dependencies {
     implementation 'com.loopj.android:android-async-http:1.4.9'
     implementation 'org.jetbrains:annotations-java5:15.0'
     implementation 'com.android.support:support-annotations:21.0.2'
+    implementation 'com.google.code.gson:gson:2.7'
+    //数据解析
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    //Android SQLite操作框架
+    implementation 'org.litepal.guolindev:core:3.1.1'
 }

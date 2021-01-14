@@ -12,15 +12,12 @@ import android.widget.Toast;
 import com.example.myapplication.Util.DBOpenHelper;
 import com.example.myapplication.Util.User;
 import com.example.myapplication.Util.Utils;
-import com.usts.englishlearning.activity.MainActivity;
-import com.usts.englishlearning.activity.WelcomeActivity;
+
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

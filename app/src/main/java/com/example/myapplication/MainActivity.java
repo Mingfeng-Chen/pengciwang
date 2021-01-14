@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.Util.DBOpenHelper;
+import com.example.myapplication.LoadWordActivity;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                                         @Override
                                         public void run() {
                                             Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
-                                            Intent intent=new Intent(MainActivity.this, com.usts.englishlearning.activity.MainActivity.class);
+                                            Intent intent=new Intent(MainActivity.this, HomeActivity.class);
                                             startActivity(intent);
                                         }
                                     });
@@ -173,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
         mTvFace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this, com.usts.englishlearning.activity.MainActivity.class);
+                Intent intent=new Intent(MainActivity.this, LoadWordActivity.class);
                 startActivity(intent);
             }
         });

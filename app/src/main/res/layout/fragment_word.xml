@@ -231,7 +231,7 @@
                                 android:layout_gravity="center"
                                 android:text="example释义:例子"
                                 android:textColor="@color/colorFontWhite"
-                                android:textSize="40sp" />
+                                android:textSize="50sp" />
 
                         </LinearLayout>
 
