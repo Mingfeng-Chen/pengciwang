@@ -9,5 +9,6 @@
         <mapping class="com.example.myapplication.domain.Phrase"></mapping>
         <mapping class="com.example.myapplication.domain.Sentence"></mapping>
         <mapping class="com.example.myapplication.domain.UserConfig"></mapping>
+        <mapping class="com.example.myapplication.domain.MyDate"></mapping>
     </list>
 </litepal>

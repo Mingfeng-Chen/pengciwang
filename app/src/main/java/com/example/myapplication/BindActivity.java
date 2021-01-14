@@ -24,6 +24,9 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import static com.example.myapplication.dao.Constant.BASE_URL;
+import static com.example.myapplication.dao.Constant.BIND;
+
 public class BindActivity extends AppCompatActivity {
     private Button mBtnBind;
     private EditText mEtTelephone;
@@ -57,7 +60,7 @@ public class BindActivity extends AppCompatActivity {
                                         "}";
                                 OkHttpClient client=new OkHttpClient();
                                 Request request=new Request.Builder()
-                                        .url("http://3b5d3d3c.cpolar.io/demo/bind")
+                                        .url(BASE_URL+BIND)
                                         .post(RequestBody.create(MediaType.parse("application/json"),json))
                                         .build();
                                 Response response=client.newCall(request).execute();

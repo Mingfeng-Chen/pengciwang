@@ -11,6 +11,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.myapplication.Adapter.MyAdapter;
+import com.example.myapplication.domain.Word;
+
+import org.litepal.LitePal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +46,14 @@ public class WrongWordsListActivity extends AppCompatActivity {
         adapter.setOnItemDeleteClickListener(new MyAdapter.onItemDeleteListener() {
             @Override
             public void onDeleteClick(int i) {
+                String word=words.get(i);
                 words.remove(i);
+                LitePal.initialize(getApplicationContext());
+                List<Word> words=LitePal.where("word=?",word+"").find(Word.class);
+                if(!words.isEmpty()){
+                    words.get(0).setIsCollected(0);
+                    words.get(0).save();
+                }
                 Toast.makeText(WrongWordsListActivity.this, "删除成功", Toast.LENGTH_SHORT).show();
                 adapter.notifyDataSetChanged();
             }

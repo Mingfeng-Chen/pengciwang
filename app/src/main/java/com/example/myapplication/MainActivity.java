@@ -28,6 +28,11 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+
+import static com.example.myapplication.dao.Constant.BASE_URL;
+import static com.example.myapplication.dao.Constant.LOGIN;
+import static com.example.myapplication.dao.Constant.REGISTER;
+
 /**
  * MainActivity
  * 登录注册
@@ -54,9 +59,10 @@ public class MainActivity extends AppCompatActivity {
         mTvForget = findViewById(R.id.tv_1);
         mTvFace = findViewById(R.id.tv_2);
         mDBOpenHelper=new DBOpenHelper(this);
-        //TODO 读Json放入数据库，测试，实际应当放在其他的Activity中
-        FileUtil.saveLocalJson2Data(Constant.CET4_BOOK_1);
-        JsonHelper.analyseDefaultAndSave(FileUtil.readLocalJson(Constant.CET4_BOOK_1));
+        if(mDBOpenHelper.getAllData().isEmpty()){
+            FileUtil.saveLocalJson2Data(Constant.CET4_BOOK_1);
+            JsonHelper.analyseDefaultAndSave(FileUtil.readLocalJson(Constant.CET4_BOOK_1));
+        }
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                                         "}";
                                 OkHttpClient client=new OkHttpClient();
                                 Request request=new Request.Builder()
-                                        .url("http://3b5d3d3c.cpolar.io/demo/login")
+                                        .url(BASE_URL+LOGIN)
                                         .post(RequestBody.create(MediaType.parse("application/json"),json))
                                         .build();
                                 Response response=client.newCall(request).execute();
@@ -101,24 +107,6 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     }).start();
-                    /*LitePal.initialize(getApplicationContext());
-                    List<User> users = LitePal.where("userName=?", username + "").find(User.class);
-                    if (users.isEmpty()) {
-                        User user = new User();
-                        user.setUserName(username);;
-                        // 测试
-                        user.setUserMoney(0);
-                        user.setUserWordNumber(0);
-                        user.save();
-                    }
-                    List<UserConfig> userConfigs = LitePal.where("userId=?",1 + "").find(UserConfig.class);
-                    if (userConfigs.isEmpty()) {
-                        UserConfig userConfig = new UserConfig();
-                        userConfig.setCurrentBookId(-1);
-                        userConfig.save();
-                    }
-                    ConfigData.setIsLogged(true);
-                    Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();*/
                 }
             }
         });
@@ -142,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                                         "}";
                                 OkHttpClient client=new OkHttpClient();
                                 Request request=new Request.Builder()
-                                        .url("http://3b5d3d3c.cpolar.io/demo/register")
+                                        .url(BASE_URL+REGISTER)
                                         .post(RequestBody.create(MediaType.parse("application/json"),json))
                                         .build();
                                 Response response=client.newCall(request).execute();

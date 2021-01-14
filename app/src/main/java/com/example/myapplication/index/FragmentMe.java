@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.myapplication.CalendarActivity;
 import com.example.myapplication.PlanActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.Util.DBOpenHelper;
@@ -63,7 +64,13 @@ public class FragmentMe extends Fragment implements View.OnClickListener {
 
     private void init() {
         layoutWordList = getActivity().findViewById(R.id.layout_me_word_list);
-        layoutWordList.setOnClickListener(this);
+        layoutWordList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(), CalendarActivity.class);
+                startActivity(intent);
+            }
+        });
         textDays = getActivity().findViewById(R.id.text_me_days);
         textWordNum = getActivity().findViewById(R.id.text_me_words);
         textMoney = getActivity().findViewById(R.id.text_me_money);
