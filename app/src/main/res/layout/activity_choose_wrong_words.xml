@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@color/act_background_black_white"
     tools:context=".ChooseWrongWordsActivity">
 
     <Button
@@ -12,7 +12,7 @@
         android:layout_width="250dp"
         android:layout_height="60dp"
         android:layout_marginTop="250dp"
-        android:background="@drawable/buttonstyle"
+        android:textColor="@color/colorBlue"
         android:text="历史顺序生成错词"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
